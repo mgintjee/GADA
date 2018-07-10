@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">G.A.D.A.</string>
+    <string name="Default">You Should Never See This</string>
+
+    <string name="InitialHeader">Gintjee\'s Aca Deca Assistant</string>
+    <string name="LoginOldHeader">Existing User Sign-In Page</string>
+    <string name="LoginNewHeader">New User Sign-In Page</string>
+
+    <string name="InitialLabelAbout">Created by: Matthew Gintjee</string>
+    <string name="InitialLabelVersion">Version 1.00</string>
+
+    <string name="LoginLabelClassCode">Class Code:</string>
+    <string name="LoginLabelUserName">User Name:</string>
+    <string name="LoginLabelPassword">Password:</string>
+    <string name="LoginLabelShowPassword">Show Password</string>
+    <string name="LoginLabelSamePassword">Same Password</string>
+
+    <string name="LoginHintClassCode">Enter your Class Code</string>
+    <string name="LoginHintUserName">Enter your User Name</string>
+    <string name="LoginHintPassword">Enter your Password</string>
+
+    <string name="InitialButtonNew">Register a New user</string>
+    <string name="InitialButtonOld">Sign-in as Existing user</string>
+    <string name="LoginButtonCancel">Cancel</string>
+    <string name="LoginButtonSignIn">Sign-in</string>
+
+    <string name="DialogClose">Close Dialog</string>
+</resources>
