@@ -54,20 +54,20 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/NewUserTV_UserName"
+                android:id="@+id/NewUserTV_UserHandle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/LoginLabelUserName"
+                android:text="@string/LoginLabelUserHandle"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/NewUserET_UserName"
+                android:id="@+id/NewUserET_UserHandle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/LoginHintUserName"
+                android:hint="@string/LoginHintUserHandle"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -103,7 +103,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
@@ -111,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/LoginLabelPassword"
+                android:text="@string/LoginLabelPasswordAgain"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -144,18 +143,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/LoginLabelShowPassword" />
+                android:text="@string/LoginLabelSamePassword"
+                android:clickable="false"/>
         </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
             <Button
