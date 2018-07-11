@@ -1,31 +1,55 @@
 package com.happybananastudio.gada;
 
-/**
- * Created by mgint on 7/9/2018.
- */
+import static com.happybananastudio.gada.MyTools.GetFormattedCurrentDate;
 
 public class UserInfo {
 
-    private String Name, ID, Password, Type;
+    private String Handle, Password, Name, Type, DateCreated;
 
-    UserInfo(String N, String I, String P, String T){
+    UserInfo(String H, String P, String N, String T) {
         super();
-        Name = N;
-        ID = I;
+        Handle = H;
         Password = P;
+        Name = N;
         Type = T;
+        DateCreated = GetFormattedCurrentDate();
     }
 
     // Setters
-    public void SetName(String N){Name = N;}
-    public void SetID(String I){ID = I;}
-    public void SetPassword(String P){Password = P;}
-    public void SetType(String T){Type = T;}
+    public void SetHandle(String H) {
+        Handle = H;
+    }
+
+    public void SetName(String N) {
+        Name = N;
+    }
+    public void SetPassword(String P) {
+        Password = P;
+    }
+
+    public void SetType(String T) {
+        Type = T;
+    }
 
     // Getters
-    public String GetName(){return Name;}
-    public String GetID(){return ID;}
-    public String GetPassword(){return Password;}
-    public String GetType(){return Type;}
+    String GetHandle() {
+        return Handle;
+    }
+
+    String GetPassword() {
+        return Password;
+    }
+
+    String GetName() {
+        return Name;
+    }
+
+    String GetType() {
+        return Type;
+    }
+
+    String GetDate() {
+        return DateCreated;
+    }
 
 }

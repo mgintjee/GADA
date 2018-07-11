@@ -3,15 +3,11 @@ package com.happybananastudio.gada;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,11 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-/**
- * Created by mgint on 7/9/2018.
- */
+import static com.happybananastudio.gada.MyTools.DialogSimple;
+import static com.happybananastudio.gada.MyTools.StringIsAlphanumericAndLength;
 
 public class ActivityOldUser extends AppCompatActivity {
 
@@ -39,21 +32,32 @@ public class ActivityOldUser extends AppCompatActivity {
     private String ClassCode = "";
     private String UserHandle = "";
     private String Password = "";
-    private boolean ValidClassCode = false;
+    private String UserType = "";
+    private String UserName = "";
+    private boolean ClassCodeExists = false;
+    private boolean UserCredentialsExists = false;
+
+    // Global Bounds
+    private int CLASS_CODE_MIN = 5;
+    private int CLASS_CODE_MAX = 10;
+    private int USER_HANDLE_MIN = 5;
+    private int USER_HANDLE_MAX = 15;
+    private int USER_PASSWORD_MIN = 8;
+    private int USER_PASSWORD_MAX = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ThisContext = this;
         setContentView(R.layout.activity_old_user);
-        InitializeWidgets();
         FirebaseApp.initializeApp(ThisContext);
         FireBase = FirebaseDatabase.getInstance();
         Database = FireBase.getReference();
-
-        Database.child("Class Codes").child("4Houses").setValue("07/09/2018");
+        InitializeWidgets();
 
         /*
+        Database.child("Class Codes").child("4houses").setValue("07/09/2018");
+
         Database.child("User Types").child("Regular User").child("ID").setValue("0");
         Database.child("User Types").child("Moderator User").child("ID").setValue("1");
         Database.child("User Types").child("Admin User").child("ID").setValue("2");
@@ -68,12 +72,12 @@ public class ActivityOldUser extends AppCompatActivity {
         Database.child("Class Code").child("User Handle").child("User Type").setValue("int");
         Database.child("Class Code").child("User Handle").child("Created On").setValue("Date:(MM/DD/YYYY)");
 
-        Database.child("4Houses").setValue("string");
-        Database.child("4Houses").child("Gintjee").setValue("string");
-        Database.child("4Houses").child("Gintjee").child("Password").setValue("NoHelp");
-        Database.child("4Houses").child("Gintjee").child("User Name").setValue("Caitlyn Gintjee");
-        Database.child("4Houses").child("Gintjee").child("User Type").setValue("2");
-        Database.child("4Houses").child("Gintjee").child("Created On").setValue("07/09/2018");
+        Database.child("4houses").setValue("string");
+        Database.child("4houses").child("gintjee").setValue("string");
+        Database.child("4houses").child("gintjee").child("Password").setValue("NoHelp");
+        Database.child("4houses").child("gintjee").child("User Name").setValue("Caitlyn Gintjee");
+        Database.child("4houses").child("gintjee").child("User Type").setValue("2");
+        Database.child("4houses").child("gintjee").child("Created On").setValue("07/09/2018");
         */
     }
 
@@ -115,16 +119,59 @@ public class ActivityOldUser extends AppCompatActivity {
         B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Message = "";
-                CheckValidClassCode();
-                if (ValidClassCode) {
-                    Message = ClassCode + " Exists!";
-                } else {
-                    Message = ClassCode + " No Exists!";
-                }
-                Log.d("Debug", Message);
+                ClassCodeGate();
             }
         });
+    }
+
+    private void ClassCodeGate() {
+
+        String DialogTitle = "Sign-In Class Code Error";
+        String DialogMessage;
+
+        boolean ValidClassCode = StringIsAlphanumericAndLength(ClassCode, CLASS_CODE_MIN, CLASS_CODE_MAX);
+
+        if (ValidClassCode) {
+            if (ClassCodeExists) {
+                UserCredentialsGate();
+            } else {
+                DialogMessage = "> Class Code Doesn\'t Exist";
+                DialogSimple(ThisContext, DialogTitle, DialogMessage);
+            }
+        } else {
+            DialogMessage = "> Class Code is not Case Sensitive\n> Class Code must be ( " + CLASS_CODE_MIN + " < x < " + CLASS_CODE_MAX + " ) characters";
+            DialogSimple(ThisContext, DialogTitle, DialogMessage);
+        }
+    }
+
+    private void UserCredentialsGate() {
+        String DialogTitle = "Sign-In User Credentials Error";
+        String DialogMessage;
+        boolean ValidUserHandle = StringIsAlphanumericAndLength(UserHandle, USER_HANDLE_MIN, USER_HANDLE_MAX);
+        boolean ValidPassword = StringIsAlphanumericAndLength(Password, USER_PASSWORD_MIN, USER_PASSWORD_MAX);
+
+        if (ValidUserHandle) {
+            if (ValidPassword) {
+                if (UserCredentialsExists) {
+                    SignInSuccess();
+                } else {
+                    DialogMessage = "> Incorrect User Credentials";
+                    DialogSimple(ThisContext, DialogTitle, DialogMessage);
+                }
+            } else {
+                DialogMessage = "> Password is Case Sensitive and \n> Password must be ( " + USER_PASSWORD_MIN + " < x < " + USER_PASSWORD_MAX + " ) characters";
+                DialogSimple(ThisContext, DialogTitle, DialogMessage);
+            }
+        } else {
+            DialogMessage = "> User Handle is not Case Sensitive\n> User Handle must be ( " + USER_HANDLE_MIN + " < x < " + USER_HANDLE_MAX + " ) characters";
+            DialogSimple(ThisContext, DialogTitle, DialogMessage);
+        }
+    }
+
+    private void SignInSuccess() {
+        String DialogTitle = "Sign-In Success";
+        String DialogMessage = "> Welcome " + UserName;
+        DialogSimple(ThisContext, DialogTitle, DialogMessage);
     }
 
     private void InitializeCheckBoxShowPassword() {
@@ -145,10 +192,10 @@ public class ActivityOldUser extends AppCompatActivity {
     private void InitializeEditTextClassCode() {
         EditText ET = findViewById(R.id.OldUserET_ClassCode);
         ET.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                ClassCode = s.toString();
+                ClassCode = s.toString().toLowerCase();
+                CheckIfClassCodeExists();
             }
 
             @Override
@@ -167,7 +214,8 @@ public class ActivityOldUser extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                UserHandle = s.toString();
+                UserHandle = s.toString().toLowerCase();
+                CheckIfUserCredentialsExist();
             }
 
             @Override
@@ -187,6 +235,7 @@ public class ActivityOldUser extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Password = s.toString();
+                CheckIfUserCredentialsExist();
             }
 
             @Override
@@ -199,19 +248,44 @@ public class ActivityOldUser extends AppCompatActivity {
         });
     }
 
-    private void CheckValidClassCode() {
-        DatabaseReference ClassCodesDatabase = Database.child("Class Codes");
+    private void CheckIfClassCodeExists() {
+        final DatabaseReference ClassCodesDatabase = Database.child("Class Codes");
         ClassCodesDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ValidClassCode = dataSnapshot.hasChild(ClassCode);
+                ClassCodeExists = dataSnapshot.hasChild(ClassCode);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
 
+    private void CheckIfUserCredentialsExist() {
+        DatabaseReference ClassCodeDatabase = Database.child(ClassCode);
+        ClassCodeDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean UserExists = dataSnapshot.hasChild(UserHandle);
+                if (UserExists) {
+                    String StoredPassword = (String) dataSnapshot.child(UserHandle).child("Password").getValue();
+                    boolean MatchingPasswords = StoredPassword != null && StoredPassword.equals(Password);
+                    if (MatchingPasswords) {
+                        UserType = (String) dataSnapshot.child(UserHandle).child("User Type").getValue();
+                        UserName = (String) dataSnapshot.child(UserHandle).child("User Name").getValue();
+                        UserCredentialsExists = true;
+                    } else {
+                        UserCredentialsExists = false;
+                    }
+                } else {
+                    UserCredentialsExists = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
 }

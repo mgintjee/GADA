@@ -11,6 +11,7 @@
 
     <string name="LoginLabelClassCode">Class Code:</string>
     <string name="LoginLabelUserHandle">User Handle:</string>
+    <string name="LoginLabelUserName">User Name:</string>
     <string name="LoginLabelPassword">Password:</string>
     <string name="LoginLabelPasswordAgain">Re-Type Password:</string>
     <string name="LoginLabelShowPassword">Show Password</string>
@@ -18,6 +19,7 @@
 
     <string name="LoginHintClassCode">Enter your Class Code</string>
     <string name="LoginHintUserHandle">Enter your User Handle</string>
+    <string name="LoginHintName">Enter your Name</string>
     <string name="LoginHintPassword">Enter your Password</string>
 
     <string name="InitialButtonNew">Register a New user</string>
@@ -26,4 +28,6 @@
     <string name="LoginButtonSignIn">Sign-in</string>
 
     <string name="DialogClose">Close Dialog</string>
+    <string name="DialogCancel">Cancel</string>
+    <string name="DialogConfirm">Confirm</string>
 </resources>

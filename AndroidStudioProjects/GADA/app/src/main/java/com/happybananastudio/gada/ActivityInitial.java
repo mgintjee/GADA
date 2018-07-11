@@ -7,17 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Calendar;
-
 public class ActivityInitial extends AppCompatActivity {
 
     Context ThisContext;
-    private static int ActivityNewUser  = 1;
-    private static int ActivityOldUser  = 2;
+    private static int ActivityNewUser = 1;
+    private static int ActivityOldUser = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
