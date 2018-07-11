@@ -23,6 +23,7 @@ public class UserInfo {
     public void SetName(String N) {
         Name = N;
     }
+
     public void SetPassword(String P) {
         Password = P;
     }

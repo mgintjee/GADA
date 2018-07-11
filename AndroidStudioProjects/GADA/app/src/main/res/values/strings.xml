@@ -5,27 +5,40 @@
     <string name="InitialHeader">Gintjee\'s Aca Deca Assistant</string>
     <string name="LoginOldHeader">Existing User Sign-In Page</string>
     <string name="LoginNewHeader">New User Sign-In Page</string>
+    <string name="HomeHeader">Home Page</string>
+    <string name="ProfileHeader">User Profile Page</string>
 
-    <string name="InitialLabelAbout">Created by: Matthew Gintjee</string>
-    <string name="InitialLabelVersion">Version 1.00</string>
+    <string name="LabelAbout">Created by: Matthew Gintjee</string>
+    <string name="LabelVersion">Version 1.00</string>
 
-    <string name="LoginLabelClassCode">Class Code:</string>
-    <string name="LoginLabelUserHandle">User Handle:</string>
-    <string name="LoginLabelUserName">User Name:</string>
-    <string name="LoginLabelPassword">Password:</string>
-    <string name="LoginLabelPasswordAgain">Re-Type Password:</string>
-    <string name="LoginLabelShowPassword">Show Password</string>
-    <string name="LoginLabelSamePassword">Same Password</string>
+    <string name="LabelClassCode">Class Code:</string>
+    <string name="LabelUserHandle">User Handle:</string>
+    <string name="LabelUserName">User Name:</string>
+    <string name="LabelPassword">Password:</string>
+    <string name="LabelPasswordAgain">Re-Type Password:</string>
+    <string name="LabelShowPassword">Show Password</string>
+    <string name="LabelSamePassword">Same Password</string>
 
-    <string name="LoginHintClassCode">Enter your Class Code</string>
-    <string name="LoginHintUserHandle">Enter your User Handle</string>
-    <string name="LoginHintName">Enter your Name</string>
-    <string name="LoginHintPassword">Enter your Password</string>
+    <string name="HintClassCode">Enter your Class Code</string>
+    <string name="HintUserHandle">Enter your User Handle</string>
+    <string name="HintName">Enter your Name</string>
+    <string name="HintPassword">Enter your Password</string>
 
     <string name="InitialButtonNew">Register a New user</string>
     <string name="InitialButtonOld">Sign-in as Existing user</string>
+
     <string name="LoginButtonCancel">Cancel</string>
     <string name="LoginButtonSignIn">Sign-in</string>
+
+    <string name="HomeButtonMyProfile">View My Profile</string>
+    <string name="HomeButtonSignOut">Sign-Out</string>
+    <string name="HomeButtonObjective">View Objective Materials</string>
+    <string name="HomeButtonSubjective">View Subjective Materials</string>
+    <string name="HomeButtonSchedule">View Schedule</string>
+    <string name="HomeButtonClassList">View Class List</string>
+
+    <string name="ProfileButtonGoBack">Go Back</string>
+    <string name="ProfileButtonSaveChanges">Save Changes</string>
 
     <string name="DialogClose">Close Dialog</string>
     <string name="DialogCancel">Cancel</string>

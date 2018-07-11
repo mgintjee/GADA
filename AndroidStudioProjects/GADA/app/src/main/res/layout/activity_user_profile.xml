@@ -12,10 +12,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/OldUserTV_Header"
+            android:id="@+id/ProfileTV_Header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/LoginOldHeader"
+            android:text="@string/ProfileHeader"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="30sp"
@@ -23,11 +23,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/OldUserTV_ClassCode"
+                android:id="@+id/ProfileTV_ClassCodeLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -35,63 +35,12 @@
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/OldUserET_ClassCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/HintClassCode"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
             <TextView
-                android:id="@+id/OldUserTV_UserHandle"
+                android:id="@+id/ProfileTV_ClassCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/LabelUserHandle"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/OldUserET_UserHandle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/HintUserHandle"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/OldUserTV_Password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/LabelPassword"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/OldUserET_Password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/HintPassword"
-                android:inputType="textPassword"
+                android:text="@string/Default"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -102,32 +51,93 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Space
+            <TextView
+                android:id="@+id/ProfileTV_UserName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <CheckBox
-                android:id="@+id/OldUserCB_ShowPassword"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/LabelShowPassword" />
+                android:text="@string/LabelUserName"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/ProfileET_UserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/HintName"
+                android:inputType="none"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ProfileTV_UserHandle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/LabelUserHandle"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/ProfileET_UserHandle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/HintUserHandle"
+                android:inputType="none"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ProfileLL_SelfProfilePassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ProfileTV_Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/LabelPassword"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/ProfileET_Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/HintPassword"
+                android:inputType="none"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ProfileLL_SelfProfileMods"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/OldUserB_Cancel"
+                android:id="@+id/ProfileB_Cancel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/OrangeSun"
-                android:text="@string/LoginButtonCancel"
+                android:text="@string/ProfileButtonGoBack"
                 android:textColor="@android:color/black" />
 
             <Space
@@ -136,15 +146,16 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/OldUserB_SignIn"
+                android:id="@+id/ProfileB_SaveChanges"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/OrangeSun"
-                android:text="@string/LoginButtonSignIn"
+                android:text="@string/ProfileButtonSaveChanges"
                 android:textColor="@android:color/black" />
 
         </LinearLayout>
 
     </LinearLayout>
+
 </LinearLayout>

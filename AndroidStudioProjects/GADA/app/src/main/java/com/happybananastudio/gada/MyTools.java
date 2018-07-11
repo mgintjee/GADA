@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -64,7 +63,7 @@ class MyTools {
         return Character.toUpperCase(temp.charAt(0)) + temp.substring(1);
     }
 
-    static String GetFormattedCurrentDate(){
+    static String GetFormattedCurrentDate() {
         Date CurrentDate = new Date();
         @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
         String FormattedCurrentDate = df.format(CurrentDate);

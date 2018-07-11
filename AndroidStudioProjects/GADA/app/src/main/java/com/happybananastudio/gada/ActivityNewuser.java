@@ -3,6 +3,7 @@ package com.happybananastudio.gada;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,9 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import static com.happybananastudio.gada.MyTools.CapitalizeFirstLetterOfWord;
 import static com.happybananastudio.gada.MyTools.DialogSimple;
 import static com.happybananastudio.gada.MyTools.StringIsAlphanumericAndLength;
@@ -39,7 +37,7 @@ public class ActivityNewUser extends AppCompatActivity {
     private DatabaseReference Database;
     private String ClassCode = "";
     private String UserHandle = "";
-    private String Name = "";
+    private String UserName = "";
     private String Password1 = "";
     private String Password2 = "";
     private boolean ClassCodeExists = false;
@@ -50,11 +48,13 @@ public class ActivityNewUser extends AppCompatActivity {
     private int CLASS_CODE_MIN = 5;
     private int CLASS_CODE_MAX = 10;
     private int USER_HANDLE_MIN = 5;
-    private int USER_HANDLE_MAX = 15;
+    private int USER_HANDLE_MAX = 25;
     private int USER_NAME_MIN = 2;
     private int USER_NAME_MAX = 15;
     private int USER_PASSWORD_MIN = 8;
     private int USER_PASSWORD_MAX = 20;
+
+    private int ActivityHome = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,9 +186,9 @@ public class ActivityNewUser extends AppCompatActivity {
 
     private void SignInSuccess() {
         String DialogTitle = "Registration Success";
-        String DialogMessage = "> Class Code: "+ ClassCode + "\n> User Name: " + Name + "\n> User Handle: " + UserHandle + "\n> Password: " + Password1;
+        String DialogMessage = "> Class Code: " + ClassCode + "\n> User Name: " + UserName + "\n> User Handle: " + UserHandle + "\n> Password: " + Password1;
         String DefaultUserType = "0";
-        UserInfo User = new UserInfo(UserHandle, Password1, Name, DefaultUserType);
+        UserInfo User = new UserInfo(UserHandle, Password1, UserName, DefaultUserType);
         DialogConfirmCancel(ThisContext, DialogTitle, DialogMessage, User);
     }
 
@@ -221,6 +221,8 @@ public class ActivityNewUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                ClassCode = s.toString().toLowerCase();
+                CheckIfClassCodeExists();
             }
 
             @Override
@@ -241,6 +243,8 @@ public class ActivityNewUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                UserHandle = s.toString().toLowerCase();
+                CheckIfUserCredentialsExist();
             }
 
             @Override
@@ -255,11 +259,12 @@ public class ActivityNewUser extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Name = s.toString().toLowerCase();
+                UserName = s.toString().toLowerCase();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                UserName = s.toString().toLowerCase();
             }
 
             @Override
@@ -280,6 +285,8 @@ public class ActivityNewUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                Password1 = s.toString();
+                CheckBoxSamePassword();
             }
 
             @Override
@@ -300,6 +307,8 @@ public class ActivityNewUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                Password2 = s.toString();
+                CheckBoxSamePassword();
             }
 
             @Override
@@ -355,7 +364,7 @@ public class ActivityNewUser extends AppCompatActivity {
     }
 
     private boolean ValidName() {
-        String[] NameParts = Name.split(" ");
+        String[] NameParts = UserName.split(" ");
         StringBuilder NameBuilder = new StringBuilder("");
         for (int i = 0; i < NameParts.length; ++i) {
             String NamePart = NameParts[i];
@@ -366,11 +375,11 @@ public class ActivityNewUser extends AppCompatActivity {
                 return false;
             }
         }
-        Name = NameBuilder.toString();
+        UserName = NameBuilder.toString();
         return true;
     }
 
-    private void RegisterNewUser(UserInfo User){
+    private void RegisterNewUser(UserInfo User) {
         Log.d("Registering", User.GetName());
         DatabaseReference ClassCodeDatabase = Database.child(ClassCode);
         DatabaseReference UserInfoDatabase = ClassCodeDatabase.child(User.GetHandle());
@@ -379,6 +388,7 @@ public class ActivityNewUser extends AppCompatActivity {
         UserInfoDatabase.child("Password").setValue(User.GetPassword());
         UserInfoDatabase.child("User Type").setValue(User.GetType());
         UserInfoDatabase.child("Created on").setValue(User.GetDate());
+        UserInfoDatabase.child("Speech").setValue("");
     }
 
     void DialogConfirmCancel(Context ThisContext, String title, String message, final UserInfo User) {
@@ -395,6 +405,7 @@ public class ActivityNewUser extends AppCompatActivity {
                 .setPositiveButton(R.string.DialogConfirm, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         RegisterNewUser(User);
+                        LaunchActivityHome();
                     }
                 })
                 .setNegativeButton(R.string.DialogCancel, new DialogInterface.OnClickListener() {
@@ -404,5 +415,13 @@ public class ActivityNewUser extends AppCompatActivity {
                 })
                 .show();
         Log.d("Choice", String.valueOf(choice[0]));
+    }
+
+    private void LaunchActivityHome() {
+        Intent intent;
+        intent = new Intent(ThisContext, ActivityHome.class);
+        intent.putExtra("ClassCode", ClassCode);
+        intent.putExtra("UserHandle", UserHandle);
+        startActivity(intent);
     }
 }

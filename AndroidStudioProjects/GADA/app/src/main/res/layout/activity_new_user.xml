@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/LoginLabelClassCode"
+                android:text="@string/LabelClassCode"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/LoginHintClassCode"
+                android:hint="@string/HintClassCode"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/LoginLabelUserName"
+                android:text="@string/LabelUserName"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/LoginHintName"
+                android:hint="@string/HintName"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/LoginLabelUserHandle"
+                android:text="@string/LabelUserHandle"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/LoginHintUserHandle"
+                android:hint="@string/HintUserHandle"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -106,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/LoginLabelPassword"
+                android:text="@string/LabelPassword"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/LoginHintPassword"
+                android:hint="@string/HintPassword"
                 android:inputType="textPassword"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -133,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/LoginLabelPasswordAgain"
+                android:text="@string/LabelPasswordAgain"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -142,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/LoginHintPassword"
+                android:hint="@string/HintPassword"
                 android:inputType="textPassword"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -155,19 +155,20 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/NewUserCB_ShowPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/LoginLabelShowPassword" />
-
-            <CheckBox
                 android:id="@+id/NewUserCB_SamePassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="false"
-                android:text="@string/LoginLabelSamePassword" />
+                android:text="@string/LabelSamePassword" />
+
+            <CheckBox
+                android:id="@+id/NewUserCB_ShowPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/LabelShowPassword" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -178,7 +179,7 @@
             <Button
                 android:id="@+id/NewUserB_Cancel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/OrangeSun"
                 android:text="@string/LoginButtonCancel"
@@ -186,13 +187,13 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <Button
                 android:id="@+id/NewUserB_SignIn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/OrangeSun"
                 android:text="@string/LoginButtonSignIn"
@@ -201,10 +202,4 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/BlueSea"
-        android:orientation="vertical"></RelativeLayout>
 </LinearLayout>

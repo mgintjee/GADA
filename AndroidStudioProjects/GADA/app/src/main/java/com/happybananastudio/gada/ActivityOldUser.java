@@ -2,6 +2,7 @@ package com.happybananastudio.gada;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -41,9 +42,11 @@ public class ActivityOldUser extends AppCompatActivity {
     private int CLASS_CODE_MIN = 5;
     private int CLASS_CODE_MAX = 10;
     private int USER_HANDLE_MIN = 5;
-    private int USER_HANDLE_MAX = 15;
+    private int USER_HANDLE_MAX = 25;
     private int USER_PASSWORD_MIN = 8;
     private int USER_PASSWORD_MAX = 20;
+
+    private int ActivityHome = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,31 +57,6 @@ public class ActivityOldUser extends AppCompatActivity {
         FireBase = FirebaseDatabase.getInstance();
         Database = FireBase.getReference();
         InitializeWidgets();
-
-        /*
-        Database.child("Class Codes").child("4houses").setValue("07/09/2018");
-
-        Database.child("User Types").child("Regular User").child("ID").setValue("0");
-        Database.child("User Types").child("Moderator User").child("ID").setValue("1");
-        Database.child("User Types").child("Admin User").child("ID").setValue("2");
-        Database.child("User Types").child("Regular User").child("Functions").setValue("Read, Post");
-        Database.child("User Types").child("Moderator User").child("Functions").setValue("Read, Post, Delete posts/comments");
-        Database.child("User Types").child("Admin User").child("Functions").setValue("Read, Post, Delete Posts/comments, Change Roster, post in schedule");
-
-        Database.child("Class Code").setValue("string");
-        Database.child("Class Code").child("User Handle").setValue("string");
-        Database.child("Class Code").child("User Handle").child("Password").setValue("string");
-        Database.child("Class Code").child("User Handle").child("User Name").setValue("string");
-        Database.child("Class Code").child("User Handle").child("User Type").setValue("int");
-        Database.child("Class Code").child("User Handle").child("Created On").setValue("Date:(MM/DD/YYYY)");
-
-        Database.child("4houses").setValue("string");
-        Database.child("4houses").child("gintjee").setValue("string");
-        Database.child("4houses").child("gintjee").child("Password").setValue("NoHelp");
-        Database.child("4houses").child("gintjee").child("User Name").setValue("Caitlyn Gintjee");
-        Database.child("4houses").child("gintjee").child("User Type").setValue("2");
-        Database.child("4houses").child("gintjee").child("Created On").setValue("07/09/2018");
-        */
     }
 
     private void InitializeWidgets() {
@@ -153,7 +131,7 @@ public class ActivityOldUser extends AppCompatActivity {
         if (ValidUserHandle) {
             if (ValidPassword) {
                 if (UserCredentialsExists) {
-                    SignInSuccess();
+                    LaunchActivityHome();
                 } else {
                     DialogMessage = "> Incorrect User Credentials";
                     DialogSimple(ThisContext, DialogTitle, DialogMessage);
@@ -166,12 +144,6 @@ public class ActivityOldUser extends AppCompatActivity {
             DialogMessage = "> User Handle is not Case Sensitive\n> User Handle must be ( " + USER_HANDLE_MIN + " < x < " + USER_HANDLE_MAX + " ) characters";
             DialogSimple(ThisContext, DialogTitle, DialogMessage);
         }
-    }
-
-    private void SignInSuccess() {
-        String DialogTitle = "Sign-In Success";
-        String DialogMessage = "> Welcome " + UserName;
-        DialogSimple(ThisContext, DialogTitle, DialogMessage);
     }
 
     private void InitializeCheckBoxShowPassword() {
@@ -200,6 +172,8 @@ public class ActivityOldUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                ClassCode = s.toString().toLowerCase();
+                CheckIfClassCodeExists();
             }
 
             @Override
@@ -220,6 +194,8 @@ public class ActivityOldUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                UserHandle = s.toString().toLowerCase();
+                CheckIfUserCredentialsExist();
             }
 
             @Override
@@ -240,6 +216,8 @@ public class ActivityOldUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                Password = s.toString();
+                CheckIfUserCredentialsExist();
             }
 
             @Override
@@ -287,5 +265,13 @@ public class ActivityOldUser extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+    }
+
+    private void LaunchActivityHome() {
+        Intent intent;
+        intent = new Intent(ThisContext, ActivityHome.class);
+        intent.putExtra("ClassCode", ClassCode);
+        intent.putExtra("UserHandle", UserHandle);
+        startActivity(intent);
     }
 }
