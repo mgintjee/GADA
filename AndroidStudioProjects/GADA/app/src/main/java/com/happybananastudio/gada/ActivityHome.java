@@ -72,7 +72,7 @@ public class ActivityHome extends AppCompatActivity {
                 intent = new Intent(ThisContext, ActivityUserProfile.class);
                 intent.putExtra("ClassCode", ClassCode);
                 intent.putExtra("UserHandle", UserHandle);
-                intent.putExtra("ProfileToView", UserHandle);
+                intent.putExtra("UserHandleToView", UserHandle);
                 startActivity(intent);
             }
         });

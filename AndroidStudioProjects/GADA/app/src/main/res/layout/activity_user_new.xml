@@ -12,10 +12,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/ProfileTV_Header"
+            android:id="@+id/NewUserTV_Header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ProfileHeader"
+            android:text="@string/LoginNewHeader"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="30sp"
@@ -38,7 +38,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/ProfileTV_ClassCodeLabel"
+                        android:id="@+id/NewUserTV_ClassCode"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -47,13 +47,12 @@
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/ProfileTV_ClassCode"
+                    <EditText
+                        android:id="@+id/NewUserET_ClassCode"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="@string/Default"
+                        android:hint="@string/HintClassCode"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
@@ -67,36 +66,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/ProfileTV_UserTypeLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="@string/LabelUserType"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/ProfileTV_UserType"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="@string/Default"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="10sp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/ProfileTV_UserName"
+                        android:id="@+id/NewUserTV_UserName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -106,11 +76,10 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/ProfileET_UserName"
+                        android:id="@+id/NewUserET_UserName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:enabled="false"
                         android:hint="@string/HintName"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
@@ -125,7 +94,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/ProfileTV_UserHandle"
+                        android:id="@+id/NewUserTV_UserHandle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -135,11 +104,10 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/ProfileET_UserHandle"
+                        android:id="@+id/NewUserET_UserHandle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:enabled="false"
                         android:hint="@string/HintUserHandle"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
@@ -147,16 +115,14 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ProfileLL_SelfProfilePassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
                     android:layout_marginRight="10sp"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/ProfileTV_Password"
+                        android:id="@+id/NewUserTV_Password1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -166,33 +132,84 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/ProfileET_Password"
+                        android:id="@+id/NewUserET_Password1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:enabled="false"
                         android:hint="@string/HintPassword"
+                        android:inputType="textPassword"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ProfileLL_SelfProfileMods"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
                     android:layout_marginRight="10sp"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/NewUserTV_Password2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/LabelPasswordAgain"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/NewUserET_Password2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="@string/HintPassword"
+                        android:inputType="textPassword"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/NewUserCB_SamePassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:text="@string/LabelSamePassword" />
+
+                    <CheckBox
+                        android:id="@+id/NewUserCB_ShowPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/LabelShowPassword" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/ProfileB_Edit"
+                        android:id="@+id/NewUserB_Cancel"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/ProfileButtonEnableEdit"
+                        android:text="@string/LoginButtonCancel"
                         android:textColor="@android:color/black" />
 
                     <Space
@@ -201,54 +218,18 @@
                         android:layout_weight="1" />
 
                     <Button
-                        android:id="@+id/ProfileB_SaveChanges"
+                        android:id="@+id/NewUserB_SignIn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/ProfileButtonSaveChanges"
-                        android:textColor="@android:color/black"
-                        android:visibility="invisible" />
+                        android:text="@string/LoginButtonSignIn"
+                        android:textColor="@android:color/black" />
 
                 </LinearLayout>
-
             </LinearLayout>
         </ScrollView>
 
+
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BlueSea"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/ProfileB_GoBack"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/GrayRock"
-                android:text="@string/ProfileButtonGoBack"
-                android:textColor="@android:color/black" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-    </RelativeLayout>
-
 </LinearLayout>

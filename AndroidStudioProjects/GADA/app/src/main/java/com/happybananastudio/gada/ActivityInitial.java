@@ -17,7 +17,7 @@ public class ActivityInitial extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ThisContext = this;
-        setContentView(R.layout.activity_initial);
+        setContentView(R.layout.activity_signin);
         InitializeWidgets();
     }
 
@@ -31,7 +31,7 @@ public class ActivityInitial extends AppCompatActivity {
     }
 
     private void InitializeNewUserButton() {
-        Button B = findViewById(R.id.InitialB_NewUser);
+        Button B = findViewById(R.id.SignInB_NewUser);
         B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +43,7 @@ public class ActivityInitial extends AppCompatActivity {
     }
 
     private void InitializeOldUserButton() {
-        Button B = findViewById(R.id.InitialB_OldUser);
+        Button B = findViewById(R.id.SignInB_OldUser);
         B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

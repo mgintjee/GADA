@@ -2,16 +2,20 @@
     <string name="app_name">G.A.D.A.</string>
     <string name="Default">You Should Never See This</string>
 
-    <string name="InitialHeader">Gintjee\'s Aca Deca Assistant</string>
+    <string name="SignInHeader">Gintjee\'s Aca Deca Assistant</string>
     <string name="LoginOldHeader">Existing User Sign-In Page</string>
     <string name="LoginNewHeader">New User Sign-In Page</string>
     <string name="HomeHeader">Home Page</string>
     <string name="ProfileHeader">User Profile Page</string>
+    <string name="ClassListHeader">Class List Page</string>
+    <string name="SubjectiveHeader">Subjective Home Page</string>
+    <string name="ObjectiveHeader">Objective Home Page</string>
+    <string name="ScheduleHeader">Class Schedule Page</string>
 
     <string name="LabelAbout">Created by: Matthew Gintjee</string>
     <string name="LabelVersion">Version 1.00</string>
-
     <string name="LabelClassCode">Class Code:</string>
+    <string name="LabelUserType">User Type:</string>
     <string name="LabelUserHandle">User Handle:</string>
     <string name="LabelUserName">User Name:</string>
     <string name="LabelPassword">Password:</string>
@@ -24,8 +28,8 @@
     <string name="HintName">Enter your Name</string>
     <string name="HintPassword">Enter your Password</string>
 
-    <string name="InitialButtonNew">Register a New user</string>
-    <string name="InitialButtonOld">Sign-in as Existing user</string>
+    <string name="SignInButtonNew">Register a New user</string>
+    <string name="SignInButtonOld">Sign-in as Existing user</string>
 
     <string name="LoginButtonCancel">Cancel</string>
     <string name="LoginButtonSignIn">Sign-in</string>
@@ -38,7 +42,12 @@
     <string name="HomeButtonClassList">View Class List</string>
 
     <string name="ProfileButtonGoBack">Go Back</string>
+    <string name="ProfileButtonEnableEdit">Enable Editing</string>
+    <string name="ProfileButtonDisableEdit">Disable Editing</string>
     <string name="ProfileButtonSaveChanges">Save Changes</string>
+
+    <string name="ClassListButtonViewProfile">Profile</string>
+    <string name="ClassListButtonViewSpeech">Speech</string>
 
     <string name="DialogClose">Close Dialog</string>
     <string name="DialogCancel">Cancel</string>

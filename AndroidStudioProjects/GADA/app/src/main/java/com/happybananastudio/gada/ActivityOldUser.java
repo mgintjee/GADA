@@ -52,7 +52,7 @@ public class ActivityOldUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ThisContext = this;
-        setContentView(R.layout.activity_old_user);
+        setContentView(R.layout.activity_user_old);
         FirebaseApp.initializeApp(ThisContext);
         FireBase = FirebaseDatabase.getInstance();
         Database = FireBase.getReference();

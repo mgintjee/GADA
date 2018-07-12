@@ -60,7 +60,7 @@ public class ActivityNewUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ThisContext = this;
-        setContentView(R.layout.activity_new_user);
+        setContentView(R.layout.activity_user_new);
         FirebaseApp.initializeApp(ThisContext);
         FireBase = FirebaseDatabase.getInstance();
         Database = FireBase.getReference();
@@ -107,12 +107,12 @@ public class ActivityNewUser extends AppCompatActivity {
         B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClassCodeGate();
+                GateClassCode();
             }
         });
     }
 
-    private void ClassCodeGate() {
+    private void GateClassCode() {
 
         String DialogTitle = "Sign-In Error";
         String DialogMessage;
@@ -121,7 +121,7 @@ public class ActivityNewUser extends AppCompatActivity {
 
         if (ValidClassCode) {
             if (ClassCodeExists) {
-                ValidUserName();
+                GateUserName();
             } else {
                 DialogMessage = "> Class Code Doesn\'t Exist";
                 DialogSimple(ThisContext, DialogTitle, DialogMessage);
@@ -133,20 +133,20 @@ public class ActivityNewUser extends AppCompatActivity {
         }
     }
 
-    private void ValidUserName() {
+    private void GateUserName() {
 
         String DialogTitle = "Sign-In Error";
         String DialogMessage;
 
         if (ValidName()) {
-            ValidUserCredentialsGate();
+            GateUserCredentials();
         } else {
-            DialogMessage = "> User Name must be Alphanumeric\n> User Name must be ( " + USER_NAME_MIN + " < x < " + USER_NAME_MAX + " ) characters";
+            DialogMessage = "> User Name must be Alphanumeric\n> User Name must be ( " + USER_NAME_MIN + " < x < " + USER_NAME_MAX + " ) characters per word";
             DialogSimple(ThisContext, DialogTitle, DialogMessage);
         }
     }
 
-    private void ValidUserCredentialsGate() {
+    private void GateUserCredentials() {
         String DialogTitle = "Sign-In Error";
         String DialogMessage;
 
@@ -157,7 +157,7 @@ public class ActivityNewUser extends AppCompatActivity {
         if (ValidUserHandle) {
             if (ValidPassword1 && ValidPassword2) {
                 if (MatchingPasswords) {
-                    UniqueUserHandleGate();
+                    GateUserHandle();
                 } else {
                     DialogMessage = "> Passwords must Match";
                     DialogSimple(ThisContext, DialogTitle, DialogMessage);
@@ -172,7 +172,7 @@ public class ActivityNewUser extends AppCompatActivity {
         }
     }
 
-    private void UniqueUserHandleGate() {
+    private void GateUserHandle() {
         String DialogTitle = "Sign-In Error";
         String DialogMessage;
 
@@ -393,7 +393,6 @@ public class ActivityNewUser extends AppCompatActivity {
 
     void DialogConfirmCancel(Context ThisContext, String title, String message, final UserInfo User) {
         AlertDialog.Builder builder;
-        final int[] choice = {-1};
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(ThisContext, R.style.AlertDialogStyle);
@@ -414,7 +413,6 @@ public class ActivityNewUser extends AppCompatActivity {
                     }
                 })
                 .show();
-        Log.d("Choice", String.valueOf(choice[0]));
     }
 
     private void LaunchActivityHome() {
