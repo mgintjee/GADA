@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class ActivityInitial extends AppCompatActivity {
+public class ActivitySignIn extends AppCompatActivity {
 
     Context ThisContext;
     private static int ActivityNewUser = 1;
@@ -52,5 +52,10 @@ public class ActivityInitial extends AppCompatActivity {
                 startActivityForResult(intent, ActivityOldUser);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }

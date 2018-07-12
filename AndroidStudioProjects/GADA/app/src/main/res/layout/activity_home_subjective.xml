@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/ClassListTV_Header"
+            android:id="@+id/SubjectiveTV_Header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/SubjectiveHeader"
@@ -41,12 +41,12 @@
                         android:layout_weight="2" />
 
                     <Button
-                        android:id="@+id/HomeB_Subjective"
+                        android:id="@+id/SubjectiveB_Essay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/HomeButtonSubjective"
+                        android:text="@string/SubjectiveButtonEssay"
                         android:textColor="@android:color/black" />
 
                     <Space
@@ -67,12 +67,12 @@
                         android:layout_weight="2" />
 
                     <Button
-                        android:id="@+id/HomeB_Subjective"
+                        android:id="@+id/SubjectiveB_Interview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/HomeButtonSubjective"
+                        android:text="@string/SubjectiveButtonInterview"
                         android:textColor="@android:color/black" />
 
                     <Space
@@ -93,12 +93,12 @@
                         android:layout_weight="2" />
 
                     <Button
-                        android:id="@+id/HomeB_Subjective"
+                        android:id="@+id/SubjectiveB_Speech"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/HomeButtonSubjective"
+                        android:text="@string/SubjectiveButtonSpeech"
                         android:textColor="@android:color/black" />
 
                     <Space
@@ -129,12 +129,12 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/ProfileB_GoBack"
+                    android:id="@+id/SubjectiveB_GoBack"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:backgroundTint="@color/GrayRock"
-                    android:text="@string/ProfileButtonGoBack"
+                    android:text="@string/ButtonGoBack"
                     android:textColor="@android:color/black" />
 
                 <Space

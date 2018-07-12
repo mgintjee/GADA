@@ -40,6 +40,10 @@ public class ActivityHome extends AppCompatActivity {
     }
 
     private void InitializeButtons() {
+        InitializeButtonClassList();
+        InitializeButtonSubjective();
+        InitializeButtonObjective();
+        InitializeButtonSchedule();
         InitializeButtonSignOut();
         InitializeButtonProfile();
     }
@@ -56,7 +60,67 @@ public class ActivityHome extends AppCompatActivity {
                                  @Override
                                  public void onClick(View v) {
                                      Intent intent;
-                                     intent = new Intent(ThisContext, ActivityInitial.class);
+                                     intent = new Intent(ThisContext, ActivitySignIn.class);
+                                     startActivity(intent);
+                                 }
+                             }
+        );
+    }
+
+    private void InitializeButtonClassList() {
+        Button B = findViewById(R.id.HomeB_ClassList);
+        B.setOnClickListener(new View.OnClickListener() {
+                                 @Override
+                                 public void onClick(View v) {
+                                     Intent intent;
+                                     intent = new Intent(ThisContext, ActivityClassList.class);
+                                     intent.putExtra("ClassCode", ClassCode);
+                                     intent.putExtra("UserHandle", UserHandle);
+                                     startActivity(intent);
+                                 }
+                             }
+        );
+    }
+
+    private void InitializeButtonSubjective() {
+        Button B = findViewById(R.id.HomeB_Subjective);
+        B.setOnClickListener(new View.OnClickListener() {
+                                 @Override
+                                 public void onClick(View v) {
+                                     Intent intent;
+                                     intent = new Intent(ThisContext, ActivityHomeSubjective.class);
+                                     intent.putExtra("ClassCode", ClassCode);
+                                     intent.putExtra("UserHandle", UserHandle);
+                                     startActivity(intent);
+                                 }
+                             }
+        );
+    }
+
+    private void InitializeButtonObjective() {
+        Button B = findViewById(R.id.HomeB_Objective);
+        B.setOnClickListener(new View.OnClickListener() {
+                                 @Override
+                                 public void onClick(View v) {
+                                     Intent intent;
+                                     intent = new Intent(ThisContext, ActivityHomeObjective.class);
+                                     intent.putExtra("ClassCode", ClassCode);
+                                     intent.putExtra("UserHandle", UserHandle);
+                                     startActivity(intent);
+                                 }
+                             }
+        );
+    }
+
+    private void InitializeButtonSchedule() {
+        Button B = findViewById(R.id.HomeB_Schedule);
+        B.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                intent = new Intent(ThisContext, ActivitySchedule.class);
+                intent.putExtra("ClassCode", ClassCode);
+                intent.putExtra("UserHandle", UserHandle);
                                      startActivity(intent);
                                  }
                              }

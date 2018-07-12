@@ -2,11 +2,11 @@ package com.happybananastudio.gada;
 
 import static com.happybananastudio.gada.MyTools.GetFormattedCurrentDate;
 
-public class UserInfo {
+public class ClassUserInfo {
 
     private String Handle, Password, Name, Type, DateCreated;
 
-    UserInfo(String H, String P, String N, String T) {
+    ClassUserInfo(String H, String P, String N, String T) {
         super();
         Handle = H;
         Password = P;

@@ -188,7 +188,7 @@ public class ActivityNewUser extends AppCompatActivity {
         String DialogTitle = "Registration Success";
         String DialogMessage = "> Class Code: " + ClassCode + "\n> User Name: " + UserName + "\n> User Handle: " + UserHandle + "\n> Password: " + Password1;
         String DefaultUserType = "0";
-        UserInfo User = new UserInfo(UserHandle, Password1, UserName, DefaultUserType);
+        ClassUserInfo User = new ClassUserInfo(UserHandle, Password1, UserName, DefaultUserType);
         DialogConfirmCancel(ThisContext, DialogTitle, DialogMessage, User);
     }
 
@@ -379,7 +379,7 @@ public class ActivityNewUser extends AppCompatActivity {
         return true;
     }
 
-    private void RegisterNewUser(UserInfo User) {
+    private void RegisterNewUser(ClassUserInfo User) {
         Log.d("Registering", User.GetName());
         DatabaseReference ClassCodeDatabase = Database.child(ClassCode);
         DatabaseReference UserInfoDatabase = ClassCodeDatabase.child(User.GetHandle());
@@ -391,7 +391,7 @@ public class ActivityNewUser extends AppCompatActivity {
         UserInfoDatabase.child("Speech").setValue("");
     }
 
-    void DialogConfirmCancel(Context ThisContext, String title, String message, final UserInfo User) {
+    void DialogConfirmCancel(Context ThisContext, String title, String message, final ClassUserInfo User) {
         AlertDialog.Builder builder;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

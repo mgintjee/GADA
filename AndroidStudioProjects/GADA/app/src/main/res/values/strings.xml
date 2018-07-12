@@ -18,6 +18,9 @@
     <string name="LabelUserType">User Type:</string>
     <string name="LabelUserHandle">User Handle:</string>
     <string name="LabelUserName">User Name:</string>
+    <string name="LabelUserProfile">User Profile:</string>
+    <string name="LabelUserSpeech">User Speech:</string>
+    <string name="LabelUserTeam">User Team:</string>
     <string name="LabelPassword">Password:</string>
     <string name="LabelPasswordAgain">Re-Type Password:</string>
     <string name="LabelShowPassword">Show Password</string>
@@ -41,13 +44,25 @@
     <string name="HomeButtonSchedule">View Schedule</string>
     <string name="HomeButtonClassList">View Class List</string>
 
-    <string name="ProfileButtonGoBack">Go Back</string>
+    <string name="ButtonGoBack">Go Back</string>
     <string name="ProfileButtonEnableEdit">Enable Editing</string>
     <string name="ProfileButtonDisableEdit">Disable Editing</string>
     <string name="ProfileButtonSaveChanges">Save Changes</string>
 
     <string name="ClassListButtonViewProfile">Profile</string>
     <string name="ClassListButtonViewSpeech">Speech</string>
+
+    <string name="SubjectiveButtonEssay">View Essay Materials</string>
+    <string name="SubjectiveButtonInterview">View Interview Materials</string>
+    <string name="SubjectiveButtonSpeech">View Speech Materials</string>
+
+    <string name="ObjectiveButtonFineArts">View Arts Materials</string>
+    <string name="ObjectiveButtonEconomics">View Economics Materials</string>
+    <string name="ObjectiveButtonLiterature">View Literature Materials</string>
+    <string name="ObjectiveButtonMath">View Math Materials</string>
+    <string name="ObjectiveButtonMusic">View Music Materials</string>
+    <string name="ObjectiveButtonScience">View Science Materials</string>
+    <string name="ObjectiveButtonSocialScience">View Social Science Materials</string>
 
     <string name="DialogClose">Close Dialog</string>
     <string name="DialogCancel">Cancel</string>

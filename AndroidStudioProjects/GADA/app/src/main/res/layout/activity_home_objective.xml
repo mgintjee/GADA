@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/ClassListTV_Header"
+            android:id="@+id/ObjectiveTV_Header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ObjectiveHeader"
@@ -41,12 +41,12 @@
                         android:layout_weight="2" />
 
                     <Button
-                        android:id="@+id/HomeB_Subjective"
+                        android:id="@+id/ObjectiveB_Arts"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/HomeButtonSubjective"
+                        android:text="@string/ObjectiveButtonFineArts"
                         android:textColor="@android:color/black" />
 
                     <Space
@@ -67,12 +67,12 @@
                         android:layout_weight="2" />
 
                     <Button
-                        android:id="@+id/HomeB_Subjective"
+                        android:id="@+id/ObjectiveB_Economics"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/HomeButtonSubjective"
+                        android:text="@string/ObjectiveButtonEconomics"
                         android:textColor="@android:color/black" />
 
                     <Space
@@ -93,12 +93,12 @@
                         android:layout_weight="2" />
 
                     <Button
-                        android:id="@+id/HomeB_Subjective"
+                        android:id="@+id/ObjectiveB_Literature"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/HomeButtonSubjective"
+                        android:text="@string/ObjectiveButtonLiterature"
                         android:textColor="@android:color/black" />
 
                     <Space
@@ -119,12 +119,12 @@
                         android:layout_weight="2" />
 
                     <Button
-                        android:id="@+id/HomeB_Subjective"
+                        android:id="@+id/ObjectiveB_Math"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/HomeButtonSubjective"
+                        android:text="@string/ObjectiveButtonMath"
                         android:textColor="@android:color/black" />
 
                     <Space
@@ -145,12 +145,12 @@
                         android:layout_weight="2" />
 
                     <Button
-                        android:id="@+id/HomeB_Subjective"
+                        android:id="@+id/ObjectiveB_Music"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/HomeButtonSubjective"
+                        android:text="@string/ObjectiveButtonMusic"
                         android:textColor="@android:color/black" />
 
                     <Space
@@ -171,12 +171,12 @@
                         android:layout_weight="2" />
 
                     <Button
-                        android:id="@+id/HomeB_Subjective"
+                        android:id="@+id/ObjectiveB_Science"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/HomeButtonSubjective"
+                        android:text="@string/ObjectiveButtonScience"
                         android:textColor="@android:color/black" />
 
                     <Space
@@ -197,12 +197,12 @@
                         android:layout_weight="2" />
 
                     <Button
-                        android:id="@+id/HomeB_Subjective"
+                        android:id="@+id/ObjectiveB_SocialScience"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/HomeButtonSubjective"
+                        android:text="@string/ObjectiveButtonSocialScience"
                         android:textColor="@android:color/black" />
 
                     <Space
@@ -233,12 +233,12 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/ProfileB_GoBack"
+                    android:id="@+id/ObjectiveB_GoBack"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:backgroundTint="@color/GrayRock"
-                    android:text="@string/ProfileButtonGoBack"
+                    android:text="@string/ButtonGoBack"
                     android:textColor="@android:color/black" />
 
                 <Space

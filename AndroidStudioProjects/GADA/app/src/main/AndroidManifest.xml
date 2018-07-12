@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityInitial">
+        <activity android:name=".ActivitySignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -19,6 +19,10 @@
         <activity android:name=".ActivityOldUser" />
         <activity android:name=".ActivityHome" />
         <activity android:name=".ActivityUserProfile" />
+        <activity android:name=".ActivityClassList" />
+        <activity android:name=".ActivityHomeSubjective" />
+        <activity android:name=".ActivityHomeObjective" />
+        <activity android:name=".ActivitySchedule" />
     </application>
 
 </manifest>

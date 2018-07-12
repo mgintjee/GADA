@@ -21,9 +21,59 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <ListView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/LabelUserProfile"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/LabelUserHandle"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/LabelUserName"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/LabelUserType"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/LabelUserTeam"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/LabelUserSpeech"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/ClassListLV_Users"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
         <RelativeLayout
@@ -38,24 +88,28 @@
                 android:layout_alignParentBottom="true"
                 android:orientation="horizontal">
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
                 <Button
-                    android:id="@+id/ProfileB_GoBack"
+                    android:id="@+id/ClassListB_GoBack"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:backgroundTint="@color/GrayRock"
-                    android:text="@string/ProfileButtonGoBack"
+                    android:text="@string/ButtonGoBack"
                     android:textColor="@android:color/black" />
 
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/ClassListB_Refresh"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/GrayRock"
+                    android:text="@string/ButtonGoBack"
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
         </RelativeLayout>
