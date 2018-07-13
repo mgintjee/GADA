@@ -93,14 +93,12 @@ public class ActivityClassList extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> ChildDataDS = dataSnapshot.getChildren();
-                ArrayList<ClassUserInfo> ClassList = new ArrayList<>();
+                ArrayList<ClassUser> ClassList = new ArrayList<>();
                 for (DataSnapshot ChildDS : ChildDataDS) {
                     String UserHandleToView = ChildDS.getKey();
                     String UserName = (String) ChildDS.child("User Name").getValue();
                     String UserType = (String) ChildDS.child("User Type").getValue();
                     String Password = (String) ChildDS.child("Password").getValue();
-                    ClassUserInfo User = new ClassUserInfo(UserHandleToView, Password, UserName, UserType);
-                    ClassList.add(User);
                 }
                 LV_ClassList.setAdapter(new ListViewClassList(ThisContext, 0, ClassList));
             }

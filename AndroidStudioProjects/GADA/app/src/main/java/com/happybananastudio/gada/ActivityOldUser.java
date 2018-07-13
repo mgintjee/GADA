@@ -22,7 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.happybananastudio.gada.MyTools.DialogSimple;
+import static com.happybananastudio.gada.MyTools.DialogSignInError;
 import static com.happybananastudio.gada.MyTools.StringIsAlphanumericAndLength;
 
 public class ActivityOldUser extends AppCompatActivity {
@@ -35,8 +35,7 @@ public class ActivityOldUser extends AppCompatActivity {
     private String Password = "";
     private String UserType = "";
     private String UserName = "";
-    private boolean ClassCodeExists = false;
-    private boolean UserCredentialsExists = false;
+    private String UserID = "";
 
     // Global Bounds
     private int CLASS_CODE_MIN = 5;
@@ -97,53 +96,40 @@ public class ActivityOldUser extends AppCompatActivity {
         B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClassCodeGate();
+
+                if (ValidInput()) {
+                    AttemptToSignIn();
+                }
             }
         });
     }
 
-    private void ClassCodeGate() {
-
-        String DialogTitle = "Sign-In Class Code Error";
+    private boolean ValidInput() {
         String DialogMessage;
-
         boolean ValidClassCode = StringIsAlphanumericAndLength(ClassCode, CLASS_CODE_MIN, CLASS_CODE_MAX);
-
-        if (ValidClassCode) {
-            if (ClassCodeExists) {
-                UserCredentialsGate();
-            } else {
-                DialogMessage = "> Class Code Doesn\'t Exist";
-                DialogSimple(ThisContext, DialogTitle, DialogMessage);
-            }
-        } else {
-            DialogMessage = "> Class Code is not Case Sensitive\n> Class Code must be ( " + CLASS_CODE_MIN + " < x < " + CLASS_CODE_MAX + " ) characters";
-            DialogSimple(ThisContext, DialogTitle, DialogMessage);
-        }
-    }
-
-    private void UserCredentialsGate() {
-        String DialogTitle = "Sign-In User Credentials Error";
-        String DialogMessage;
         boolean ValidUserHandle = StringIsAlphanumericAndLength(UserHandle, USER_HANDLE_MIN, USER_HANDLE_MAX);
-        boolean ValidPassword = StringIsAlphanumericAndLength(Password, USER_PASSWORD_MIN, USER_PASSWORD_MAX);
+        boolean ValidPassword1 = StringIsAlphanumericAndLength(Password, USER_PASSWORD_MIN, USER_PASSWORD_MAX);
 
-        if (ValidUserHandle) {
-            if (ValidPassword) {
-                if (UserCredentialsExists) {
-                    LaunchActivityHome();
-                } else {
-                    DialogMessage = "> Incorrect User Credentials";
-                    DialogSimple(ThisContext, DialogTitle, DialogMessage);
-                }
-            } else {
-                DialogMessage = "> Password is Case Sensitive and \n> Password must be ( " + USER_PASSWORD_MIN + " < x < " + USER_PASSWORD_MAX + " ) characters";
-                DialogSimple(ThisContext, DialogTitle, DialogMessage);
-            }
-        } else {
-            DialogMessage = "> User Handle is not Case Sensitive\n> User Handle must be ( " + USER_HANDLE_MIN + " < x < " + USER_HANDLE_MAX + " ) characters";
-            DialogSimple(ThisContext, DialogTitle, DialogMessage);
+
+        if (!ValidClassCode) {
+            DialogMessage = "> Class Code must be Alphanumeric\n> Class Code is not Case Sensitive\n> Class Code must be ( " + CLASS_CODE_MIN + " < x < " + CLASS_CODE_MAX + " ) characters";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
         }
+
+        if (!ValidUserHandle) {
+            DialogMessage = "> User Handle must be Alphanumeric\n> User Handle is not Case Sensitive\n> User Handle must be ( " + USER_HANDLE_MIN + " < x < " + USER_HANDLE_MAX + " ) characters";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
+        }
+
+        if (!ValidPassword1) {
+            DialogMessage = "> Password must be Alphanumeric\n> Password is Case Sensitive and \n> Password must be ( " + USER_PASSWORD_MIN + " < x < " + USER_PASSWORD_MAX + " ) characters";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
+        }
+
+        return true;
     }
 
     private void InitializeCheckBoxShowPassword() {
@@ -167,13 +153,10 @@ public class ActivityOldUser extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 ClassCode = s.toString().toLowerCase();
-                CheckIfClassCodeExists();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                ClassCode = s.toString().toLowerCase();
-                CheckIfClassCodeExists();
             }
 
             @Override
@@ -189,13 +172,10 @@ public class ActivityOldUser extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 UserHandle = s.toString().toLowerCase();
-                CheckIfUserCredentialsExist();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                UserHandle = s.toString().toLowerCase();
-                CheckIfUserCredentialsExist();
             }
 
             @Override
@@ -211,13 +191,10 @@ public class ActivityOldUser extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Password = s.toString();
-                CheckIfUserCredentialsExist();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                Password = s.toString();
-                CheckIfUserCredentialsExist();
             }
 
             @Override
@@ -226,38 +203,28 @@ public class ActivityOldUser extends AppCompatActivity {
         });
     }
 
-    private void CheckIfClassCodeExists() {
-        final DatabaseReference ClassCodesDatabase = Database.child("Class Codes");
-        ClassCodesDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void AttemptToSignIn() {
+        DatabaseReference ClassListDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList");
+        ClassListDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ClassCodeExists = dataSnapshot.hasChild(ClassCode);
-            }
+                boolean CredentialsExist = false;
+                for (DataSnapshot DS_Child : dataSnapshot.getChildren()) {
+                    String uID = (String) DS_Child.getKey();
+                    String uHandle = (String) DS_Child.child("UserHandle").getValue();
+                    String uPassword = (String) DS_Child.child("Password").getValue();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
-
-    private void CheckIfUserCredentialsExist() {
-        DatabaseReference ClassCodeDatabase = Database.child(ClassCode);
-        ClassCodeDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                boolean UserExists = dataSnapshot.hasChild(UserHandle);
-                if (UserExists) {
-                    String StoredPassword = (String) dataSnapshot.child(UserHandle).child("Password").getValue();
-                    boolean MatchingPasswords = StoredPassword != null && StoredPassword.equals(Password);
-                    if (MatchingPasswords) {
-                        UserType = (String) dataSnapshot.child(UserHandle).child("User Type").getValue();
-                        UserName = (String) dataSnapshot.child(UserHandle).child("User Name").getValue();
-                        UserCredentialsExists = true;
-                    } else {
-                        UserCredentialsExists = false;
+                    if (UserHandle.equals(uHandle) && Password.equals(uPassword)) {
+                        UserID = uID;
+                        CredentialsExist = true;
+                        break;
                     }
+                }
+
+                if (CredentialsExist) {
+                    LaunchActivityHome();
                 } else {
-                    UserCredentialsExists = false;
+                    DialogSignInError(ThisContext, "Incorrect Credentials");
                 }
             }
 
@@ -271,7 +238,7 @@ public class ActivityOldUser extends AppCompatActivity {
         Intent intent;
         intent = new Intent(ThisContext, ActivityHome.class);
         intent.putExtra("ClassCode", ClassCode);
-        intent.putExtra("UserHandle", UserHandle);
+        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 }

@@ -4,7 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -69,5 +76,37 @@ class MyTools {
         String FormattedCurrentDate = df.format(CurrentDate);
         System.out.println("Date is " + FormattedCurrentDate);
         return FormattedCurrentDate;
+    }
+
+    static String GetUserID(String ClassCode, String UserHandle) {
+        FirebaseDatabase Firebase = FirebaseDatabase.getInstance();
+        DatabaseReference ClassCodeDatabase = Firebase.getReference().child("");
+        return "";
+    }
+
+    static void DialogSignInError(Context ThisContext, String DialogMessage) {
+        String DialogTitle = "Sign-In Error";
+        DialogSimple(ThisContext, DialogTitle, DialogMessage);
+    }
+
+    static String GetUserHandle() {
+        return "";
+    }
+
+    static boolean ClassCodeExists(final String ClassCode) {
+        final boolean[] Flag = new boolean[1];
+        FirebaseDatabase Firebase = FirebaseDatabase.getInstance();
+        final DatabaseReference ClassCodesDatabase = Firebase.getReference().child("Class Codes");
+        ClassCodesDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Flag[0] = dataSnapshot.hasChild(ClassCode);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        return Flag[0];
     }
 }

@@ -1,6 +1,5 @@
 package com.happybananastudio.gada;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,34 +26,31 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import static com.happybananastudio.gada.MyTools.CapitalizeFirstLetterOfWord;
-import static com.happybananastudio.gada.MyTools.DialogSimple;
+import static com.happybananastudio.gada.MyTools.DialogSignInError;
 import static com.happybananastudio.gada.MyTools.StringIsAlphanumericAndLength;
 
 public class ActivityNewUser extends AppCompatActivity {
 
     Context ThisContext;
-    private FirebaseDatabase FireBase;
     private DatabaseReference Database;
     private String ClassCode = "";
+    private int UserID = -1;
     private String UserHandle = "";
     private String UserName = "";
     private String Password1 = "";
     private String Password2 = "";
-    private boolean ClassCodeExists = false;
-    private boolean UserHandleExists = false;
-    private boolean MatchingPasswords = false;
+    private String UserType = "0";
 
     // Global Bounds
     private int CLASS_CODE_MIN = 5;
     private int CLASS_CODE_MAX = 10;
     private int USER_HANDLE_MIN = 5;
     private int USER_HANDLE_MAX = 25;
-    private int USER_NAME_MIN = 2;
+    private int USER_NAME_MIN = 1;
     private int USER_NAME_MAX = 15;
     private int USER_PASSWORD_MIN = 8;
     private int USER_PASSWORD_MAX = 20;
 
-    private int ActivityHome = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +58,7 @@ public class ActivityNewUser extends AppCompatActivity {
         ThisContext = this;
         setContentView(R.layout.activity_user_new);
         FirebaseApp.initializeApp(ThisContext);
-        FireBase = FirebaseDatabase.getInstance();
-        Database = FireBase.getReference();
+        Database = FirebaseDatabase.getInstance().getReference();
         InitializeWidgets();
     }
 
@@ -95,101 +90,9 @@ public class ActivityNewUser extends AppCompatActivity {
         B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(Activity.RESULT_CANCELED);
                 finish();
             }
         });
-    }
-
-    private void InitializeButtonSignIn() {
-
-        Button B = findViewById(R.id.NewUserB_SignIn);
-        B.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GateClassCode();
-            }
-        });
-    }
-
-    private void GateClassCode() {
-
-        String DialogTitle = "Sign-In Error";
-        String DialogMessage;
-
-        boolean ValidClassCode = StringIsAlphanumericAndLength(ClassCode, CLASS_CODE_MIN, CLASS_CODE_MAX);
-
-        if (ValidClassCode) {
-            if (ClassCodeExists) {
-                GateUserName();
-            } else {
-                DialogMessage = "> Class Code Doesn\'t Exist";
-                DialogSimple(ThisContext, DialogTitle, DialogMessage);
-
-            }
-        } else {
-            DialogMessage = "> Class Code is not Case Sensitive\n> Class Code must be ( " + CLASS_CODE_MIN + " < x < " + CLASS_CODE_MAX + " ) characters";
-            DialogSimple(ThisContext, DialogTitle, DialogMessage);
-        }
-    }
-
-    private void GateUserName() {
-
-        String DialogTitle = "Sign-In Error";
-        String DialogMessage;
-
-        if (ValidName()) {
-            GateUserCredentials();
-        } else {
-            DialogMessage = "> User Name must be Alphanumeric\n> User Name must be ( " + USER_NAME_MIN + " < x < " + USER_NAME_MAX + " ) characters per word";
-            DialogSimple(ThisContext, DialogTitle, DialogMessage);
-        }
-    }
-
-    private void GateUserCredentials() {
-        String DialogTitle = "Sign-In Error";
-        String DialogMessage;
-
-        boolean ValidUserHandle = StringIsAlphanumericAndLength(UserHandle, USER_HANDLE_MIN, USER_HANDLE_MAX);
-        boolean ValidPassword1 = StringIsAlphanumericAndLength(Password1, USER_PASSWORD_MIN, USER_PASSWORD_MAX);
-        boolean ValidPassword2 = StringIsAlphanumericAndLength(Password2, USER_PASSWORD_MIN, USER_PASSWORD_MAX);
-
-        if (ValidUserHandle) {
-            if (ValidPassword1 && ValidPassword2) {
-                if (MatchingPasswords) {
-                    GateUserHandle();
-                } else {
-                    DialogMessage = "> Passwords must Match";
-                    DialogSimple(ThisContext, DialogTitle, DialogMessage);
-                }
-            } else {
-                DialogMessage = "> Password is Case Sensitive and \n> Password must be ( " + USER_PASSWORD_MIN + " < x < " + USER_PASSWORD_MAX + " ) characters";
-                DialogSimple(ThisContext, DialogTitle, DialogMessage);
-            }
-        } else {
-            DialogMessage = "> User Handle is not Case Sensitive\n> User Handle must be ( " + USER_HANDLE_MIN + " < x < " + USER_HANDLE_MAX + " ) characters";
-            DialogSimple(ThisContext, DialogTitle, DialogMessage);
-        }
-    }
-
-    private void GateUserHandle() {
-        String DialogTitle = "Sign-In Error";
-        String DialogMessage;
-
-        if (!UserHandleExists) {
-            SignInSuccess();
-        } else {
-            DialogMessage = "> User Handle is Already Taken";
-            DialogSimple(ThisContext, DialogTitle, DialogMessage);
-        }
-    }
-
-    private void SignInSuccess() {
-        String DialogTitle = "Registration Success";
-        String DialogMessage = "> Class Code: " + ClassCode + "\n> User Name: " + UserName + "\n> User Handle: " + UserHandle + "\n> Password: " + Password1;
-        String DefaultUserType = "0";
-        ClassUserInfo User = new ClassUserInfo(UserHandle, Password1, UserName, DefaultUserType);
-        DialogConfirmCancel(ThisContext, DialogTitle, DialogMessage, User);
     }
 
     private void InitializeCheckBoxShowPassword() {
@@ -216,13 +119,11 @@ public class ActivityNewUser extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 ClassCode = s.toString().toLowerCase();
-                CheckIfClassCodeExists();
+                FB_GetNewUserID();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                ClassCode = s.toString().toLowerCase();
-                CheckIfClassCodeExists();
             }
 
             @Override
@@ -238,13 +139,10 @@ public class ActivityNewUser extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 UserHandle = s.toString().toLowerCase();
-                CheckIfUserCredentialsExist();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                UserHandle = s.toString().toLowerCase();
-                CheckIfUserCredentialsExist();
             }
 
             @Override
@@ -285,8 +183,6 @@ public class ActivityNewUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Password1 = s.toString();
-                CheckBoxSamePassword();
             }
 
             @Override
@@ -307,8 +203,6 @@ public class ActivityNewUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Password2 = s.toString();
-                CheckBoxSamePassword();
             }
 
             @Override
@@ -319,7 +213,7 @@ public class ActivityNewUser extends AppCompatActivity {
 
     private void CheckBoxSamePassword() {
         CheckBox CB = findViewById(R.id.NewUserCB_SamePassword);
-        MatchingPasswords = !Password1.equals("") && Password1.equals(Password2);
+        boolean MatchingPasswords = !Password1.equals("") && Password1.equals(Password2);
         if (MatchingPasswords) {
             if (!CB.isChecked()) {
                 CB.toggle();
@@ -331,39 +225,7 @@ public class ActivityNewUser extends AppCompatActivity {
         }
     }
 
-    private void CheckIfClassCodeExists() {
-        final DatabaseReference ClassCodesDatabase = Database.child("Class Codes");
-        if (!ClassCode.equals("")) {
-            ClassCodesDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    ClassCodeExists = dataSnapshot.hasChild(ClassCode);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
-        } else {
-            ClassCodeExists = false;
-        }
-    }
-
-    private void CheckIfUserCredentialsExist() {
-        DatabaseReference ClassCodeDatabase = Database.child(ClassCode);
-        ClassCodeDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserHandleExists = dataSnapshot.hasChild(UserHandle);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
-
-    private boolean ValidName() {
+    private boolean ValidUserName() {
         String[] NameParts = UserName.split(" ");
         StringBuilder NameBuilder = new StringBuilder("");
         for (int i = 0; i < NameParts.length; ++i) {
@@ -379,19 +241,173 @@ public class ActivityNewUser extends AppCompatActivity {
         return true;
     }
 
-    private void RegisterNewUser(ClassUserInfo User) {
-        Log.d("Registering", User.GetName());
-        DatabaseReference ClassCodeDatabase = Database.child(ClassCode);
-        DatabaseReference UserInfoDatabase = ClassCodeDatabase.child(User.GetHandle());
+    private void InitializeButtonSignIn() {
 
-        UserInfoDatabase.child("User Name").setValue(User.GetName());
-        UserInfoDatabase.child("Password").setValue(User.GetPassword());
-        UserInfoDatabase.child("User Type").setValue(User.GetType());
-        UserInfoDatabase.child("Created on").setValue(User.GetDate());
-        UserInfoDatabase.child("Speech").setValue("");
+        Button B = findViewById(R.id.NewUserB_SignIn);
+        B.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ValidInput()) {
+                    String CreatedOn = MyTools.GetFormattedCurrentDate();
+                    ClassUser User = new ClassUser(CreatedOn, Password1, UserHandle, UserName, UserType);
+                    FB_SigningIntoClass(User);
+                }
+            }
+        });
     }
 
-    void DialogConfirmCancel(Context ThisContext, String title, String message, final ClassUserInfo User) {
+    private void FB_SigningIntoClass(final ClassUser User) {
+        final DatabaseReference ClassCodesDatabase = Database.child("ClassCodes");
+        ClassCodesDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.hasChild(ClassCode)) {
+                    // Existing ClassCode
+                    String DialogTitle = "Class Code: " + ClassCode + " Doesn\'t Exist";
+                    String DialogMessage = "Would you like to proceed and create this new class code?";
+                    DialogChoiceNewClass(ThisContext, DialogTitle, DialogMessage, User);
+                } else {
+                    // Existing ClassCode
+                    String DialogTitle = "Is the Following Correct?";
+                    String DialogMessage = "> Class Code: " + ClassCode + "\n> User Name: " + User.UserName + "\n> User Handle: " + User.UserHandle + "\n> Password: " + User.Password + "\n> User Type: " + User.UserType;
+                    DialogChoiceNewUser(ThisContext, DialogTitle, DialogMessage, User);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void FB_GetNewUserID() {
+        final DatabaseReference ClassDatabase = Database.child("ClassCodes").child(ClassCode);
+        ClassDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("Class List")) {
+                    // There is a class listing for this class code
+                    Log.d("DEBUG", "Class List Exists");
+                    FB_GetNextAvailableUserID();
+                } else {
+                    Log.d("DEBUG", "Class List Does Not Exists");
+                    UserID = 1;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void FB_GetNextAvailableUserID() {
+        final DatabaseReference ClassListDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList");
+        ClassListDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserID = 1;
+                for (DataSnapshot DS_Child : dataSnapshot.getChildren()) {
+                    int DS_Key = Integer.valueOf(DS_Child.getKey());
+                    if (UserID != DS_Key) {
+                        break;
+                    } else {
+                        UserID++;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private boolean ValidInput() {
+        String DialogMessage;
+        boolean ValidClassCode = StringIsAlphanumericAndLength(ClassCode, CLASS_CODE_MIN, CLASS_CODE_MAX);
+        boolean ValidUserHandle = StringIsAlphanumericAndLength(UserHandle, USER_HANDLE_MIN, USER_HANDLE_MAX);
+        boolean ValidUserName = ValidUserName();
+        boolean ValidPassword1 = StringIsAlphanumericAndLength(Password1, USER_PASSWORD_MIN, USER_PASSWORD_MAX);
+        boolean MatchingPasswords = !Password1.equals("") && Password1.equals(Password2);
+
+
+        if (!ValidClassCode) {
+            DialogMessage = "> Class Code must be Alphanumeric\n> Class Code is not Case Sensitive\n> Class Code must be ( " + CLASS_CODE_MIN + " < x < " + CLASS_CODE_MAX + " ) characters";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
+        }
+
+        if (!ValidUserName) {
+            DialogMessage = "> User Name must be Alphanumeric\n> User Name must be ( " + USER_NAME_MIN + " < x < " + USER_NAME_MAX + " ) characters per word";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
+        }
+
+        if (!ValidUserHandle) {
+            DialogMessage = "> User Handle must be Alphanumeric\n> User Handle is not Case Sensitive\n> User Handle must be ( " + USER_HANDLE_MIN + " < x < " + USER_HANDLE_MAX + " ) characters";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
+        }
+
+        if (!MatchingPasswords) {
+            DialogMessage = "> Passwords must be the same";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
+        }
+
+        if (!ValidPassword1) {
+            DialogMessage = "> Password must be Alphanumeric\n> Password is Case Sensitive and \n> Password must be ( " + USER_PASSWORD_MIN + " < x < " + USER_PASSWORD_MAX + " ) characters";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void FB_CreateNewClassCode() {
+        DatabaseReference ClassCodesDatabase = Database.child("ClassCodes");
+        String CurrentDate = MyTools.GetFormattedCurrentDate();
+        ClassCodesDatabase.child(ClassCode).child("Created On").setValue(CurrentDate);
+    }
+
+    private void RegisterNewUser(ClassUser User) {
+
+        Log.d("Registering", User.UserHandle);
+        String StringUserID = String.valueOf(UserID);
+        DatabaseReference UserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList").child(StringUserID);
+        UserDatabase.setValue(User);
+    }
+
+    void DialogChoiceNewClass(final Context ThisContext, String title, String message, final ClassUser User) {
+        AlertDialog.Builder builder;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(ThisContext, R.style.AlertDialogStyle);
+        } else {
+            builder = new AlertDialog.Builder(ThisContext);
+        }
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(R.string.DialogConfirm, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        FB_CreateNewClassCode();
+                        User.UserType = "2";
+                        String DialogTitle = "Is the Following Correct?";
+                        String DialogMessage = "> Class Code: " + ClassCode + "\n> User Name: " + User.UserName + "\n> User Handle: " + User.UserHandle + "\n> Password: " + User.Password + "\n> User Type: " + User.UserType;
+                        DialogChoiceNewUser(ThisContext, DialogTitle, DialogMessage, User);
+
+                    }
+                })
+                .setNegativeButton(R.string.DialogCancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
+    void DialogChoiceNewUser(Context ThisContext, String title, String message, final ClassUser User) {
         AlertDialog.Builder builder;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -419,7 +435,7 @@ public class ActivityNewUser extends AppCompatActivity {
         Intent intent;
         intent = new Intent(ThisContext, ActivityHome.class);
         intent.putExtra("ClassCode", ClassCode);
-        intent.putExtra("UserHandle", UserHandle);
+        intent.putExtra("UserID", UserID);
         startActivity(intent);
     }
 }

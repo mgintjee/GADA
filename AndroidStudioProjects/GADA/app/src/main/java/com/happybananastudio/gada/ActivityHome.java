@@ -1,8 +1,11 @@
 package com.happybananastudio.gada;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -59,9 +62,9 @@ public class ActivityHome extends AppCompatActivity {
         B.setOnClickListener(new View.OnClickListener() {
                                  @Override
                                  public void onClick(View v) {
-                                     Intent intent;
-                                     intent = new Intent(ThisContext, ActivitySignIn.class);
-                                     startActivity(intent);
+                                     String DialogTitle = "Warning";
+                                     String DialogMessage = "Are you sure you want to sign out?";
+                                     DialogChoiceSignOut(ThisContext, DialogTitle, DialogMessage);
                                  }
                              }
         );
@@ -140,6 +143,35 @@ public class ActivityHome extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    void DialogChoiceSignOut(Context ThisContext, String title, String message) {
+        AlertDialog.Builder builder;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(ThisContext, R.style.AlertDialogStyle);
+        } else {
+            builder = new AlertDialog.Builder(ThisContext);
+        }
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(R.string.DialogConfirm, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SignOut();
+                    }
+                })
+                .setNegativeButton(R.string.DialogCancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
+    private void SignOut() {
+        Intent intent;
+        intent = new Intent(ThisContext, ActivitySignIn.class);
+        startActivity(intent);
     }
 
     @Override

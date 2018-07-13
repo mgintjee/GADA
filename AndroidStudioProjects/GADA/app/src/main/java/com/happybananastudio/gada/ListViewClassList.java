@@ -15,13 +15,13 @@ import java.util.ArrayList;
  * Created by mgint on 7/11/2018.
  */
 
-public class ListViewClassList extends ArrayAdapter<ClassUserInfo> {
+public class ListViewClassList extends ArrayAdapter<ClassUser> {
 
     private Context ThisContext;
-    private ArrayList<ClassUserInfo> ClassList;
+    private ArrayList<ClassUser> ClassList;
     private String ClassCode, UserHandle;
 
-    ListViewClassList(Context Context, int Resource, ArrayList<ClassUserInfo> NewClassList) {
+    ListViewClassList(Context Context, int Resource, ArrayList<ClassUser> NewClassList) {
         super(Context, Resource, NewClassList);
         ThisContext = Context;
         ClassList = NewClassList;
@@ -33,7 +33,7 @@ public class ListViewClassList extends ArrayAdapter<ClassUserInfo> {
         ViewHolder ViewHolder;
         String UserHandleToView, UserName, UserType;
         View Result;
-        ClassUserInfo LocalUserInfo = ClassList.get(position);
+        ClassUser LocalUserInfo = ClassList.get(position);
 
         if (convertView == null) {
             ViewHolder = new ViewHolder();
@@ -51,14 +51,14 @@ public class ListViewClassList extends ArrayAdapter<ClassUserInfo> {
             ViewHolder = (ViewHolder) convertView.getTag();
             Result = convertView;
         }
-
+/*
         UserHandleToView = LocalUserInfo.GetHandle();
         UserName = LocalUserInfo.GetName();
-        UserType = LocalUserInfo.GetType();
-
+        UserType = LocalUserInfo.GetType();x
         ViewHolder.TV_UserHandle.setText(UserHandleToView);
         ViewHolder.TV_UserName.setText(UserName);
         ViewHolder.TV_UserType.setText(UserType);
+        */
 
         return Result;
     }
@@ -75,7 +75,7 @@ public class ListViewClassList extends ArrayAdapter<ClassUserInfo> {
     }
 
     @Override
-    public ClassUserInfo getItem(int position) {
+    public ClassUser getItem(int position) {
         return ClassList.get(position);
     }
 
