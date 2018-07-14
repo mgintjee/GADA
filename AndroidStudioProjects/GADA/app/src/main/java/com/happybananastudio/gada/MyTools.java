@@ -109,4 +109,30 @@ class MyTools {
         });
         return Flag[0];
     }
+
+    static String UserTypeAsString(String Type) {
+        switch (Type) {
+            case "0":
+                return "User";
+            case "1":
+                return "Mod";
+            case "2":
+                return "Admin";
+            default:
+                return "Error Loading";
+        }
+    }
+
+    static String UserTeamAsString(String Type) {
+        switch (Type) {
+            case "0":
+                return "Unassigned";
+            case "1":
+                return "C";
+            case "2":
+                return "B";
+            default:
+                return "A";
+        }
+    }
 }

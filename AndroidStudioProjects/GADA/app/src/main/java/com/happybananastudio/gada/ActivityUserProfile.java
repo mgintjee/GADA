@@ -1,19 +1,10 @@
 package com.happybananastudio.gada;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,9 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.happybananastudio.gada.MyTools.CapitalizeFirstLetterOfWord;
-import static com.happybananastudio.gada.MyTools.DialogSimple;
-import static com.happybananastudio.gada.MyTools.StringIsAlphanumericAndLength;
+import static com.happybananastudio.gada.MyTools.UserTypeAsString;
 
 /**
  * Created by mgint on 7/10/2018.
@@ -32,12 +21,11 @@ import static com.happybananastudio.gada.MyTools.StringIsAlphanumericAndLength;
 
 public class ActivityUserProfile extends AppCompatActivity {
     Context ThisContext;
-    private String ClassCode, UserHandle, UserType;
-    private String UserHandleToView, CreatedOn, Password, Speech, UserName, UserTypeToView;
+    private String ClassCode, ActiveUserID;
+    private String UserID, UserHandle, CreatedOn, Password, Speech, UserName, UserTeam, UserType;
     private String NewUserHandle, NewPassword, NewUserName;
     private boolean EditEnabled = false;
     private boolean UserHandleExists = false;
-    private FirebaseDatabase FireBase;
     private DatabaseReference Database;
 
     private int USER_NAME_MIN = 2;
@@ -52,25 +40,57 @@ public class ActivityUserProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         ThisContext = this;
-        FireBase = FirebaseDatabase.getInstance();
-        Database = FireBase.getReference();
+        Database = FirebaseDatabase.getInstance().getReference();
+        ExtractInformation();
+        InitializeWidgets();
+    }
+
+    private void ExtractInformation() {
         ExtractIntentInformation();
+        //ExtractUserInformation();
+    }
+
+    private void ExtractIntentInformation() {
+        ClassCode = getIntent().getStringExtra("ClassCode");
+        UserID = getIntent().getStringExtra("UserID");
+    }
+
+    private void ExtractUserInformation() {
+        final DatabaseReference UserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList").child(UserID);
+        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserID = dataSnapshot.getKey();
+                CreatedOn = (String) dataSnapshot.child("CreatedOn").getValue();
+                Password = (String) dataSnapshot.child("Password").getValue();
+                UserHandle = (String) dataSnapshot.child("UserHandle").getValue();
+                UserName = (String) dataSnapshot.child("UserName").getValue();
+                UserTeam = (String) dataSnapshot.child("UserTeam").getValue();
+                UserType = (String) dataSnapshot.child("UserType").getValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     private void InitializeWidgets(){
-        InitializeTextViews();
-        InitializeButtons();
-        InitializeEditTexts();
+        //InitializeTextViews();
+        //InitializeButtons();
+        InitializeTextView();
+        //InitializeEditTexts();
     }
     private void InitializeTextViews(){
         InitializeTextViewClassCode();
         InitializeTextViewUserType();
+        InitializeTextViewUserTeam();
     }
 
     private void InitializeButtons(){
-        InitializeButtonEdit();
-        InitializeButtonGoBack();
-        InitializeButtonSaveChanges();
+        //InitializeButtonEdit();
+        //InitializeButtonGoBack();
+        //InitializeButtonSaveChanges();
     }
 
     private void InitializeTextViewClassCode(){
@@ -80,10 +100,32 @@ public class ActivityUserProfile extends AppCompatActivity {
 
     private void InitializeTextViewUserType(){
         TextView TV = findViewById(R.id.ProfileTV_UserType);
-        String UserTypeAsString = UserTypeAsString(UserTypeToView);
-        TV.setText(UserTypeAsString);
+        String StringUserType = UserTypeAsString(UserType);
+        TV.setText(StringUserType);
     }
 
+    private void InitializeTextViewUserTeam() {
+        TextView TV = findViewById(R.id.ProfileTV_UserTeam);
+        String StringuserTeam = UserTypeAsString(UserTeam);
+        TV.setText(StringuserTeam);
+    }
+
+    private void InitializeTextView() {
+        final DatabaseReference UserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList");
+        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //ClassUser User = (ClassUser) dataSnapshot.child(UserID).getValue();
+                Object OBJECT = dataSnapshot.child(UserID).getValue();
+                Log.d("Object:", OBJECT.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+/*
     private void InitializeEditTexts(){
         InitializeEditTextUserName();
         InitializeEditTextUserHandle();
@@ -220,14 +262,6 @@ public class ActivityUserProfile extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void ExtractIntentInformation(){
-        ClassCode = getIntent().getStringExtra("ClassCode");
-        UserHandleToView = getIntent().getStringExtra("UserHandleToView");
-        UserHandle = getIntent().getStringExtra("UserHandle");
-        RetrieveUserInfoFromDatabase();
-        HandleWhatToDisplay();
     }
 
     private void HandleWhatToDisplay(){
@@ -428,4 +462,5 @@ public class ActivityUserProfile extends AppCompatActivity {
         UserName = NewUserName;
         Password = NewPassword;
     }
+    */
 }

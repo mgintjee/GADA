@@ -29,7 +29,7 @@ import static com.happybananastudio.gada.MyTools.CapitalizeFirstLetterOfWord;
 import static com.happybananastudio.gada.MyTools.DialogSignInError;
 import static com.happybananastudio.gada.MyTools.StringIsAlphanumericAndLength;
 
-public class ActivityNewUser extends AppCompatActivity {
+public class ActivitySignInNewUser extends AppCompatActivity {
 
     Context ThisContext;
     private DatabaseReference Database;
@@ -249,7 +249,8 @@ public class ActivityNewUser extends AppCompatActivity {
             public void onClick(View v) {
                 if (ValidInput()) {
                     String CreatedOn = MyTools.GetFormattedCurrentDate();
-                    ClassUser User = new ClassUser(CreatedOn, Password1, UserHandle, UserName, UserType);
+                    String DefaultUserTeam = "0";
+                    ClassUser User = new ClassUser(CreatedOn, Password1, UserHandle, UserName, DefaultUserTeam, UserType);
                     FB_SigningIntoClass(User);
                 }
             }

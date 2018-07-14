@@ -5,11 +5,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by mgint on 7/10/2018.
@@ -17,7 +24,7 @@ import android.widget.TextView;
 
 public class ActivityHome extends AppCompatActivity {
     private Context ThisContext;
-    private String UserHandle, ClassCode;
+    private String UserID, UserHandle, ClassCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +37,12 @@ public class ActivityHome extends AppCompatActivity {
 
     private void ExtractIntentInformation() {
         ClassCode = getIntent().getStringExtra("ClassCode");
-        UserHandle = getIntent().getStringExtra("UserHandle");
+        UserID = getIntent().getStringExtra("UserID");
+        ExtractUserHandle();
     }
 
     private void InitializeWidgets() {
-        InitializeTextViews();
         InitializeButtons();
-    }
-
-    private void InitializeTextViews() {
-        InitializeTextViewWelcome();
     }
 
     private void InitializeButtons() {
@@ -78,7 +81,7 @@ public class ActivityHome extends AppCompatActivity {
                                      Intent intent;
                                      intent = new Intent(ThisContext, ActivityClassList.class);
                                      intent.putExtra("ClassCode", ClassCode);
-                                     intent.putExtra("UserHandle", UserHandle);
+                                     intent.putExtra("UserID", UserID);
                                      startActivity(intent);
                                  }
                              }
@@ -93,7 +96,7 @@ public class ActivityHome extends AppCompatActivity {
                                      Intent intent;
                                      intent = new Intent(ThisContext, ActivityHomeSubjective.class);
                                      intent.putExtra("ClassCode", ClassCode);
-                                     intent.putExtra("UserHandle", UserHandle);
+                                     intent.putExtra("UserID", UserID);
                                      startActivity(intent);
                                  }
                              }
@@ -108,7 +111,7 @@ public class ActivityHome extends AppCompatActivity {
                                      Intent intent;
                                      intent = new Intent(ThisContext, ActivityHomeObjective.class);
                                      intent.putExtra("ClassCode", ClassCode);
-                                     intent.putExtra("UserHandle", UserHandle);
+                                     intent.putExtra("UserID", UserID);
                                      startActivity(intent);
                                  }
                              }
@@ -123,7 +126,7 @@ public class ActivityHome extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(ThisContext, ActivitySchedule.class);
                 intent.putExtra("ClassCode", ClassCode);
-                intent.putExtra("UserHandle", UserHandle);
+                intent.putExtra("UserID", UserID);
                                      startActivity(intent);
                                  }
                              }
@@ -138,9 +141,25 @@ public class ActivityHome extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(ThisContext, ActivityUserProfile.class);
                 intent.putExtra("ClassCode", ClassCode);
-                intent.putExtra("UserHandle", UserHandle);
-                intent.putExtra("UserHandleToView", UserHandle);
+                intent.putExtra("UserID", UserID);
+                intent.putExtra("UserIDtoView", UserID);
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void ExtractUserHandle() {
+        final DatabaseReference UserDatabase = FirebaseDatabase.getInstance().getReference().child("ClassCodes").child(ClassCode).child("ClassList").child(UserID);
+        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserHandle = (String) dataSnapshot.child("UserHandle").getValue();
+                InitializeTextViewWelcome();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

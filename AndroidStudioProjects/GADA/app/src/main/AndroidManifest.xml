@@ -15,8 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityNewUser" />
-        <activity android:name=".ActivityOldUser" />
+        <activity android:name=".ActivitySignInNewUser" />
+        <activity android:name=".ActivitySignInOldUser" />
         <activity android:name=".ActivityHome" />
         <activity android:name=".ActivityUserProfile" />
         <activity android:name=".ActivityClassList" />

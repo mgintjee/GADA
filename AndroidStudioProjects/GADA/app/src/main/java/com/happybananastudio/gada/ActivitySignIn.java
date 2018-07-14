@@ -43,7 +43,7 @@ public class ActivitySignIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                intent = new Intent(ThisContext, ActivityNewUser.class);
+                intent = new Intent(ThisContext, ActivitySignInNewUser.class);
                 startActivityForResult(intent, ActivityNewUser);
             }
         });
@@ -55,7 +55,7 @@ public class ActivitySignIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                intent = new Intent(ThisContext, ActivityOldUser.class);
+                intent = new Intent(ThisContext, ActivitySignInOldUser.class);
                 startActivityForResult(intent, ActivityOldUser);
             }
         });
@@ -69,22 +69,22 @@ public class ActivitySignIn extends AppCompatActivity {
                 Arrays.asList("Arts", "Economics", "Literature", "Math", "Music", "Science", "Social Science"));
         ArrayList<String> SubjectiveTopics = new ArrayList<>(
                 Arrays.asList("Essay", "Interview", "Impromptu"));
-        DatabaseReference DataStructure = Database.child("Class Codes");
+        DatabaseReference DataStructure = Database.child("ClassCodes");
         DataStructure.child("temp").setValue("asdf");
-        DatabaseReference D = DataStructure.child("4houses").child("Class List");
+        DatabaseReference D = DataStructure.child("4houses").child("ClassList");
 
-        DataStructure = Database.child("Data Structure");
-        DataStructure.child("Created On").setValue("MM-DD-YYYY");
+        DataStructure = Database.child("ExampleOfDataOrganization");
+        DataStructure.child("CreatedOn").setValue("MM-DD-YYYY");
 
-        DatabaseReference ClassList = DataStructure.child("Class List");
-        DatabaseReference UserID = ClassList.child("User ID");
-        UserID.child("Created On").setValue("MM-DD-YYYY");
-        UserID.child("User Name").setValue("String");
-        UserID.child("User Handle").setValue("String");
+        DatabaseReference ClassList = DataStructure.child("ClassList");
+        DatabaseReference UserID = ClassList.child("UserID");
+        UserID.child("CreatedOn").setValue("MM-DD-YYYY");
+        UserID.child("UserName").setValue("String");
+        UserID.child("UserHandle").setValue("String");
         UserID.child("Password").setValue("String");
-        UserID.child("User type").setValue("String");
+        UserID.child("Usertype").setValue("String");
 
-        DatabaseReference ClassSchedule = DataStructure.child("Class Schedule");
+        DatabaseReference ClassSchedule = DataStructure.child("ClassSchedule");
         DatabaseReference Day = ClassSchedule.child("Day");
         Day.child("Date").setValue("MM-DD-YYYY");
         Day.child("Info").setValue("String");
@@ -97,29 +97,29 @@ public class ActivitySignIn extends AppCompatActivity {
             if (i == 2) {
                 Subject = "Speech";
             }
-            DatabaseReference SubjectiveDB = DataStructure.child("Subjective Material");
-            DatabaseReference SubjectDB = SubjectiveDB.child(Subject + " Materials");
+            DatabaseReference SubjectiveDB = DataStructure.child("SubjectiveMaterial");
+            DatabaseReference SubjectDB = SubjectiveDB.child(Subject + "Materials");
             Subject = SubjectiveTopics.get(i);
             Prompts = SubjectDB.child(Subject + " Prompts");
-            Prompts.child("Prompt ID").child("Prompt").setValue("String");
-            Prompts.child("Prompt ID").child("Rating").child("UserID").setValue("String");
-            Prompts.child("Prompt ID").child("Rating").child("Vote").setValue("String");
+            Prompts.child("PromptID").child("Prompt").setValue("String");
+            Prompts.child("PromptID").child("Rating").child("UserID").setValue("String");
+            Prompts.child("PromptID").child("Rating").child("Vote").setValue("String");
             if (i == 2) {
-                Prompts = SubjectDB.child("User Speeches");
-                Prompts.child("User ID").setValue("String");
+                Prompts = SubjectDB.child("UserSpeeches");
+                Prompts.child("UserID").setValue("String");
             }
         }
 
         for (int i = 0; i < ObjectiveTopics.size(); ++i) {
             String Subject = ObjectiveTopics.get(i);
-            DatabaseReference ObjectiveDB = DataStructure.child("Objective Material");
-            DatabaseReference SubjectDB = ObjectiveDB.child(Subject + " Materials");
+            DatabaseReference ObjectiveDB = DataStructure.child("ObjectiveMaterial");
+            DatabaseReference SubjectDB = ObjectiveDB.child(Subject + "Materials");
             Prompts = SubjectDB.child(Subject + " Questions");
-            Prompts.child("Question ID").child("Question").child("Question").setValue("String");
-            Prompts.child("Question ID").child("Question").child("Correct Answer").setValue("String");
-            Prompts.child("Question ID").child("Question").child("False Answers").setValue("String");
-            Prompts.child("Question ID").child("Rating").child("UserID").setValue("String");
-            Prompts.child("Question ID").child("Rating").child("Vote").setValue("String");
+            Prompts.child("QuestionID").child("Question").child("Question").setValue("String");
+            Prompts.child("QuestionID").child("Question").child("CorrectAnswer").setValue("String");
+            Prompts.child("QuestionID").child("Question").child("FalseAnswers").setValue("String");
+            Prompts.child("QuestionID").child("Rating").child("UserID").setValue("String");
+            Prompts.child("QuestionID").child("Rating").child("Vote").setValue("String");
         }
     }
 

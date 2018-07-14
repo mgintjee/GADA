@@ -16,6 +16,7 @@
     <string name="LabelVersion">Version 1.00</string>
     <string name="LabelClassCode">Class Code:</string>
     <string name="LabelUserType">User Type:</string>
+    <string name="LabelUserID">User ID:</string>
     <string name="LabelUserHandle">User Handle:</string>
     <string name="LabelUserName">User Name:</string>
     <string name="LabelUserProfile">User Profile:</string>

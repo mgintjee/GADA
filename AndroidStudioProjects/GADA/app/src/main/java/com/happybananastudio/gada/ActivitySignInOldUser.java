@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import static com.happybananastudio.gada.MyTools.DialogSignInError;
 import static com.happybananastudio.gada.MyTools.StringIsAlphanumericAndLength;
 
-public class ActivityOldUser extends AppCompatActivity {
+public class ActivitySignInOldUser extends AppCompatActivity {
 
     Context ThisContext;
     private FirebaseDatabase FireBase;
@@ -210,7 +210,7 @@ public class ActivityOldUser extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 boolean CredentialsExist = false;
                 for (DataSnapshot DS_Child : dataSnapshot.getChildren()) {
-                    String uID = (String) DS_Child.getKey();
+                    String uID = DS_Child.getKey();
                     String uHandle = (String) DS_Child.child("UserHandle").getValue();
                     String uPassword = (String) DS_Child.child("Password").getValue();
 
@@ -220,7 +220,6 @@ public class ActivityOldUser extends AppCompatActivity {
                         break;
                     }
                 }
-
                 if (CredentialsExist) {
                     LaunchActivityHome();
                 } else {
