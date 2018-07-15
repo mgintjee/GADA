@@ -16,21 +16,4 @@ public class ClassUser {
         UserTeam = team;
         UserType = type;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        // TODO
-        //  Need to generate the equals and the hash code mapping to allow for easilty pulling the data when making queries. :)
-        if (!(obj instanceof ClassUser)) {
-            return false;
-        }
-
-        if (obj == this) {
-            return true;
-        }
-
-        ClassUser OtherUser = (ClassUser) obj;
-        return true;
-    }
-
 }

@@ -51,7 +51,7 @@ public class ActivitySignInOldUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ThisContext = this;
-        setContentView(R.layout.activity_user_old);
+        setContentView(R.layout.activity_signin_old_user);
         FirebaseApp.initializeApp(ThisContext);
         FireBase = FirebaseDatabase.getInstance();
         Database = FireBase.getReference();

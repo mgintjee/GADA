@@ -4,7 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.text.InputType;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Space;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -13,7 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.happybananastudio.gada.MyTools.UserTypeAsString;
+import static com.happybananastudio.gada.MyTools.CapitalizeFirstLetterOfWord;
+import static com.happybananastudio.gada.MyTools.DialogSignInError;
+import static com.happybananastudio.gada.MyTools.StringIsAlphanumericAndLength;
 
 /**
  * Created by mgint on 7/10/2018.
@@ -22,10 +32,9 @@ import static com.happybananastudio.gada.MyTools.UserTypeAsString;
 public class ActivityUserProfile extends AppCompatActivity {
     Context ThisContext;
     private String ClassCode, ActiveUserID;
-    private String UserID, UserHandle, CreatedOn, Password, Speech, UserName, UserTeam, UserType;
+    private String UserID, UserHandle, CreatedOn, Password1, Password2, UserName, UserTeam, UserType;
     private String NewUserHandle, NewPassword, NewUserName;
     private boolean EditEnabled = false;
-    private boolean UserHandleExists = false;
     private DatabaseReference Database;
 
     private int USER_NAME_MIN = 2;
@@ -43,54 +52,52 @@ public class ActivityUserProfile extends AppCompatActivity {
         Database = FirebaseDatabase.getInstance().getReference();
         ExtractInformation();
         InitializeWidgets();
+        HandleEditingFeature();
     }
 
     private void ExtractInformation() {
         ExtractIntentInformation();
-        //ExtractUserInformation();
+        ExtractCreatedOn();
     }
 
     private void ExtractIntentInformation() {
         ClassCode = getIntent().getStringExtra("ClassCode");
         UserID = getIntent().getStringExtra("UserID");
-    }
-
-    private void ExtractUserInformation() {
-        final DatabaseReference UserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList").child(UserID);
-        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserID = dataSnapshot.getKey();
-                CreatedOn = (String) dataSnapshot.child("CreatedOn").getValue();
-                Password = (String) dataSnapshot.child("Password").getValue();
-                UserHandle = (String) dataSnapshot.child("UserHandle").getValue();
-                UserName = (String) dataSnapshot.child("UserName").getValue();
-                UserTeam = (String) dataSnapshot.child("UserTeam").getValue();
-                UserType = (String) dataSnapshot.child("UserType").getValue();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+        ActiveUserID = getIntent().getStringExtra("ActiveUserID");
     }
 
     private void InitializeWidgets(){
-        //InitializeTextViews();
-        //InitializeButtons();
-        InitializeTextView();
-        //InitializeEditTexts();
+        InitializeTextViews();
+        InitializeSpinners();
+        InitializeEditTexts();
+        InitializeButtons();
+        InitializeCheckBoxes();
     }
     private void InitializeTextViews(){
         InitializeTextViewClassCode();
-        InitializeTextViewUserType();
-        InitializeTextViewUserTeam();
+        InitializeTextViewUserID();
+    }
+
+    private void InitializeSpinners() {
+        InitializeSpinnerUserTeam();
+        InitializeSpinnerUserType();
     }
 
     private void InitializeButtons(){
-        //InitializeButtonEdit();
-        //InitializeButtonGoBack();
-        //InitializeButtonSaveChanges();
+        InitializeButtonEdit();
+        InitializeButtonGoBack();
+        InitializeButtonSaveChanges();
+    }
+
+    private void InitializeEditTexts() {
+        InitializeEditTextUserName();
+        InitializeEditTextUserHandle();
+        InitializeEditTextPassword();
+    }
+
+    private void InitializeCheckBoxes() {
+        InitializeCheckBoxShowPassword();
+        InitializeCheckBoxSamePassword();
     }
 
     private void InitializeTextViewClassCode(){
@@ -98,26 +105,49 @@ public class ActivityUserProfile extends AppCompatActivity {
         TV.setText(ClassCode);
     }
 
-    private void InitializeTextViewUserType(){
-        TextView TV = findViewById(R.id.ProfileTV_UserType);
-        String StringUserType = UserTypeAsString(UserType);
-        TV.setText(StringUserType);
+    private void InitializeTextViewUserID() {
+        TextView TV = findViewById(R.id.ProfileTV_UserID);
+        TV.setText(UserID);
     }
 
-    private void InitializeTextViewUserTeam() {
-        TextView TV = findViewById(R.id.ProfileTV_UserTeam);
-        String StringuserTeam = UserTypeAsString(UserTeam);
-        TV.setText(StringuserTeam);
-    }
-
-    private void InitializeTextView() {
-        final DatabaseReference UserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList");
+    private void ExtractCreatedOn() {
+        final DatabaseReference UserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList").child(UserID);
         UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //ClassUser User = (ClassUser) dataSnapshot.child(UserID).getValue();
-                Object OBJECT = dataSnapshot.child(UserID).getValue();
-                Log.d("Object:", OBJECT.toString());
+                CreatedOn = (String) dataSnapshot.child("CreatedOn").getValue();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void InitializeSpinnerUserType() {
+        final Spinner S = findViewById(R.id.ProfileS_UserTeam);
+        final DatabaseReference UserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList").child(UserID);
+        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserTeam = (String) dataSnapshot.child("UserTeam").getValue();
+                int IntUserTeam = Integer.valueOf(UserTeam);
+                S.setSelection(IntUserTeam);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void InitializeSpinnerUserTeam() {
+        final Spinner S = findViewById(R.id.ProfileS_UserType);
+        final DatabaseReference UserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList").child(UserID);
+        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserType = (String) dataSnapshot.child("UserType").getValue();
+                int IntUserType = Integer.valueOf(UserType);
+                S.setSelection(IntUserType);
             }
 
             @Override
@@ -125,69 +155,97 @@ public class ActivityUserProfile extends AppCompatActivity {
             }
         });
     }
-/*
-    private void InitializeEditTexts(){
-        InitializeEditTextUserName();
-        InitializeEditTextUserHandle();
-        InitializeEditTextPassword();
-    }
-    private void InitializeEditTextUserName(){
-        EditText ET_Name = findViewById(R.id.ProfileET_UserName);
-        ET_Name.setText(UserName);
-        ET_Name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+    private void InitializeEditTextUserName() {
+        final EditText ET_Name = findViewById(R.id.ProfileET_UserName);
+        final DatabaseReference UserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList").child(UserID);
+        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                NewUserName = s.toString().toLowerCase();
-                ValidName();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserName = (String) dataSnapshot.child("UserName").getValue();
+                ET_Name.setText(UserName);
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                NewUserName = s.toString().toLowerCase();
-                ValidName();
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }
-    private void InitializeEditTextUserHandle(){
-        EditText ET_Name = findViewById(R.id.ProfileET_UserHandle);
-        ET_Name.setText(UserHandleToView);
-        ET_Name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+    private void InitializeEditTextUserHandle() {
+        final EditText ET_Name = findViewById(R.id.ProfileET_UserHandle);
+        final DatabaseReference UserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList").child(UserID);
+        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                NewUserHandle = s.toString().toLowerCase();
-                CheckIfUserCredentialsExist();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserHandle = (String) dataSnapshot.child("UserHandle").getValue();
+                ET_Name.setText(UserHandle);
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                NewUserHandle = s.toString().toLowerCase();
-                CheckIfUserCredentialsExist();
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }
+
     private void InitializeEditTextPassword(){
-        EditText ET_Name = findViewById(R.id.ProfileET_Password);
-        ET_Name.setText(Password);
-        ET_Name.addTextChangedListener(new TextWatcher() {
+        final EditText ET_Password1 = findViewById(R.id.ProfileET_Password1);
+        final EditText ET_Password2 = findViewById(R.id.ProfileET_Password2);
+        final DatabaseReference UserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList").child(UserID);
+        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                NewPassword = s.toString().toLowerCase();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Password1 = (String) dataSnapshot.child("Password").getValue();
+                Password2 = Password1;
+                ET_Password1.setText(Password1);
+                ET_Password2.setText(Password1);
             }
-
             @Override
-            public void afterTextChanged(Editable s) {
-                NewPassword = s.toString().toLowerCase();
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+    }
+
+    private void HandleEditingFeature() {
+        final boolean UserSame = ActiveUserID.equals(UserID);
+        final DatabaseReference ActiveUserDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList").child(ActiveUserID);
+        ActiveUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String ActiveUserType = (String) dataSnapshot.child("UserType").getValue();
+                boolean UserAbleToEdit = ActiveUserType != null && ActiveUserType.equals("2");
+                EditEnabled = UserSame || UserAbleToEdit;
+                if (EditEnabled) {
+                    EnableEditingProfile();
+                } else {
+                    DisableEditingProfile();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void DisableEditingProfile() {
+        LinearLayout LL = findViewById(R.id.ProfileLL_Edit);
+        Space S = findViewById(R.id.Profile_Spacer);
+        Button B = findViewById(R.id.ProfileB_Edit);
+
+        LL.setVisibility(View.GONE);
+        S.setVisibility(View.VISIBLE);
+        B.setVisibility(View.GONE);
+    }
+
+    private void EnableEditingProfile() {
+        LinearLayout LL = findViewById(R.id.ProfileLL_Edit);
+        Space S = findViewById(R.id.Profile_Spacer);
+        Button B = findViewById(R.id.ProfileB_Edit);
+
+        LL.setVisibility(View.VISIBLE);
+        S.setVisibility(View.GONE);
+        B.setVisibility(View.VISIBLE);
     }
 
     private void InitializeButtonEdit(){
@@ -208,23 +266,20 @@ public class ActivityUserProfile extends AppCompatActivity {
             }
         });
     }
-
     private void DisableEditingOnEditTexts(){
         EditText ET_Name = findViewById(R.id.ProfileET_UserName);
         EditText ET_Handle = findViewById(R.id.ProfileET_UserHandle);
-        EditText ET_Password = findViewById(R.id.ProfileET_Password);
+        EditText ET_Password = findViewById(R.id.ProfileET_Password2);
 
         ET_Name.setEnabled(false);
         ET_Handle.setEnabled(false);
         ET_Password.setEnabled(false);
 
-        NewPassword = Password;
         NewUserHandle = UserHandle;
         NewUserName = UserName;
 
         ET_Name.setText(UserName);
         ET_Handle.setText(UserHandle);
-        ET_Password.setText(Password);
 
         Button B_Save = findViewById(R.id.ProfileB_SaveChanges);
         B_Save.setVisibility(View.INVISIBLE);
@@ -232,7 +287,7 @@ public class ActivityUserProfile extends AppCompatActivity {
     private void EnableEditingOnEditTexts(){
         EditText ET_Name = findViewById(R.id.ProfileET_UserName);
         EditText ET_Handle = findViewById(R.id.ProfileET_UserHandle);
-        EditText ET_Password = findViewById(R.id.ProfileET_Password);
+        EditText ET_Password = findViewById(R.id.ProfileET_Password1);
 
         ET_Name.setEnabled(true);
         ET_Handle.setEnabled(true);
@@ -257,144 +312,48 @@ public class ActivityUserProfile extends AppCompatActivity {
         B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!UserHandle.equals(NewUserHandle) || !UserName.equals(NewUserName) || !Password.equals(NewPassword)){
-                    GateUserName();
+                //if(!UserHandle.equals(NewUserHandle) || !UserName.equals(NewUserName) || !Password.equals(NewPassword)){ }
+            }
+        });
+    }
+
+    private void InitializeCheckBoxSamePassword() {
+        CheckBox CB = findViewById(R.id.ProfileCB_SamePassword);
+        boolean MatchingPasswords = !Password1.equals("") && Password1.equals(Password2);
+        if (MatchingPasswords) {
+            if (!CB.isChecked()) {
+                CB.toggle();
+            }
+        } else {
+            if (CB.isChecked()) {
+                CB.toggle();
+            }
+        }
+    }
+
+    private void InitializeCheckBoxShowPassword() {
+
+        final EditText ET1 = findViewById(R.id.ProfileET_Password1);
+        final EditText ET2 = findViewById(R.id.ProfileET_Password2);
+        CheckBox CB = findViewById(R.id.ProfileCB_ShowPassword);
+        CB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    ET1.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    ET2.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    ET1.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    ET2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
             }
         });
     }
 
-    private void HandleWhatToDisplay(){
-        LinearLayout LL_Password = findViewById(R.id.ProfileLL_SelfProfilePassword);
-        LinearLayout LL_Mods = findViewById(R.id.ProfileLL_SelfProfileMods);
-        if(UserHandle.equals(UserHandleToView)){
-            // Viewing Self
-            LL_Password.setVisibility(View.VISIBLE);
-            LL_Mods.setVisibility(View.VISIBLE);
-        }
-        else{
-            // Viewing Other
-            LL_Password.setVisibility(View.GONE);
-            LL_Mods.setVisibility(View.GONE);
-        }
-    }
-
-    private void RetrieveUserInfoFromDatabase(){
-        final DatabaseReference UserInfoDatabase = Database.child(ClassCode).child(UserHandleToView);
-        UserInfoDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                CreatedOn = (String) dataSnapshot.child("Created on").getValue();
-                Password = (String) dataSnapshot.child("Password").getValue();
-                Speech = (String) dataSnapshot.child("Speech").getValue();
-                UserName = (String) dataSnapshot.child("User Name").getValue();
-                UserTypeToView = (String) dataSnapshot.child("User Type").getValue();
-
-                NewPassword = Password;
-                NewUserHandle = UserHandleToView;
-                NewUserName = UserName;
-
-                InitializeWidgets();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
-
-    private void CheckIfUserCredentialsExist() {
-        DatabaseReference ClassCodeDatabase = Database.child(ClassCode);
-        ClassCodeDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserHandleExists = dataSnapshot.hasChild(NewUserHandle);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
-
-    private String UserTypeAsString(String S){
-        if(S!= null) {
-            switch (S) {
-                case "0":
-                    return "User";
-                case "1":
-                    return "Moderator";
-                case "2":
-                    return "Coach";
-                default:
-                    return "Error Loading";
-            }
-        }
-        else{
-            return "Error Loading";
-        }
-    }
-    private void GateUserName() {
-        String DialogTitle = "Sign-In Error";
-        String DialogMessage;
-
-        boolean SameUserName = UserName.equals(NewUserName);
-        if (SameUserName || ValidName()) {
-            GatePassword();
-        } else {
-            DialogMessage = "> User Name must be Alphanumeric\n> User Name must be ( " + USER_NAME_MIN + " < x < " + USER_NAME_MAX + " ) characters";
-            DialogSimple(ThisContext, DialogTitle, DialogMessage);
-        }
-    }
-
-    private void GatePassword(){
-        String DialogTitle = "Sign-In Error";
-        String DialogMessage;
-
-        boolean ValidPassword = StringIsAlphanumericAndLength(UserHandle, USER_HANDLE_MIN, USER_HANDLE_MAX);
-
-        boolean SamePassword = Password.equals(NewPassword);
-        if (SamePassword || ValidPassword) {
-            GateUserHandle();
-        } else {
-            DialogMessage = "> Password is not Case Sensitive\n> Password must be ( " + USER_HANDLE_MIN + " < x < " + USER_HANDLE_MAX + " ) characters";
-            DialogSimple(ThisContext, DialogTitle, DialogMessage);
-        }
-
-    }
-
-    private void GateUserHandle(){
-
-        String DialogTitle = "Sign-In Error";
-        String DialogMessage;
-        boolean ValidUserHandle = StringIsAlphanumericAndLength(UserHandle, USER_HANDLE_MIN, USER_HANDLE_MAX);
-        boolean SameUserHandle = UserHandleToView.equals(NewUserHandle);
-        if (SameUserHandle || ValidUserHandle) {
-            if (SameUserHandle || !UserHandleExists) {
-                SignInSuccess();
-            } else {
-                DialogMessage = "> User Handle is Already Taken";
-                DialogSimple(ThisContext, DialogTitle, DialogMessage);
-            }
-        }
-        else{
-
-            DialogMessage = "> User Handle is not Case Sensitive\n> User Handle must be ( " + USER_HANDLE_MIN + " < x < " + USER_HANDLE_MAX + " ) characters";
-            DialogSimple(ThisContext, DialogTitle, DialogMessage);
-        }
-    }
-
-    private void SignInSuccess(){
-        String DialogTitle = "Are You Sure You Want To Save These Changes";
-        String DialogMessage = "> User Name: " + NewUserName + "\n> User Handle: " + NewUserHandle + "\n> Password: " + NewPassword;
-        DialogConfirmCancel(ThisContext, DialogTitle, DialogMessage);
-    }
-
-    private boolean ValidName() {
-        String[] NameParts = NewUserName.split(" ");
+    private boolean ValidUserName() {
+        String[] NameParts = UserName.split(" ");
         StringBuilder NameBuilder = new StringBuilder("");
-        for (int i = 0; i < NameParts.length; ++i) {
-            String NamePart = NameParts[i];
+        for (String NamePart : NameParts) {
             if (StringIsAlphanumericAndLength(NamePart, USER_NAME_MIN, USER_NAME_MAX)) {
                 String FormattedNamePart = CapitalizeFirstLetterOfWord(NamePart);
                 NameBuilder.append(FormattedNamePart).append(" ");
@@ -402,65 +361,42 @@ public class ActivityUserProfile extends AppCompatActivity {
                 return false;
             }
         }
-        NewUserName = NameBuilder.toString();
+        UserName = NameBuilder.toString();
         return true;
     }
 
-    void DialogConfirmCancel(Context ThisContext, String title, String message) {
-        AlertDialog.Builder builder;
+    private boolean ValidInput() {
+        String DialogMessage;
+        boolean ValidUserHandle = StringIsAlphanumericAndLength(UserHandle, USER_HANDLE_MIN, USER_HANDLE_MAX);
+        boolean ValidUserName = ValidUserName();
+        boolean ValidPassword1 = StringIsAlphanumericAndLength(Password1, USER_PASSWORD_MIN, USER_PASSWORD_MAX);
+        boolean MatchingPasswords = !Password1.equals("") && Password1.equals(Password2);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(ThisContext, R.style.AlertDialogStyle);
-        } else {
-            builder = new AlertDialog.Builder(ThisContext);
+        if (!ValidUserName) {
+            DialogMessage = "> User Name must be Alphanumeric\n> User Name must be ( " + USER_NAME_MIN + " < x < " + USER_NAME_MAX + " ) characters per word";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
         }
-        builder.setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(R.string.DialogConfirm, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        HandleSavingNewUserInfo();
-                    }
-                })
-                .setNegativeButton(R.string.DialogCancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .show();
+
+        if (!ValidUserHandle) {
+            DialogMessage = "> User Handle must be Alphanumeric\n> User Handle is not Case Sensitive\n> User Handle must be ( " + USER_HANDLE_MIN + " < x < " + USER_HANDLE_MAX + " ) characters";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
+        }
+
+        if (!MatchingPasswords) {
+            DialogMessage = "> Passwords must be the same";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
+        }
+
+        if (!ValidPassword1) {
+            DialogMessage = "> Password must be Alphanumeric\n> Password is Case Sensitive and \n> Password must be ( " + USER_PASSWORD_MIN + " < x < " + USER_PASSWORD_MAX + " ) characters";
+            DialogSignInError(ThisContext, DialogMessage);
+            return false;
+        }
+
+        return true;
     }
 
-    private void HandleSavingNewUserInfo(){
-
-        DatabaseReference ClassCodeDatabase = Database.child(ClassCode);
-        if(UserHandleToView.equals(NewUserHandle)){
-            // just update old entry
-            DatabaseReference UserInfoDatabase = ClassCodeDatabase.child(UserHandleToView);
-            if(!Password.equals(NewPassword)){
-                // Update the password if the new password is different
-                UserInfoDatabase.child("Password").setValue(NewPassword);
-            }
-            if(!UserName.equals(NewUserName)){
-                // Update the user name if the new user name is different
-                UserInfoDatabase.child("User Name").setValue(NewUserName);
-            }
-        }
-        else{
-            // Have to make new entry and delete old
-            DatabaseReference NewUserInfoDatabase = ClassCodeDatabase.child(NewUserHandle);
-            NewUserInfoDatabase.child("User Name").setValue(NewUserName);
-            NewUserInfoDatabase.child("Password").setValue(NewPassword);
-            NewUserInfoDatabase.child("User Type").setValue(UserTypeToView);
-            NewUserInfoDatabase.child("Created on").setValue(CreatedOn);
-            NewUserInfoDatabase.child("Speech").setValue(Speech);
-
-            DatabaseReference OldUserInfoDatabase = ClassCodeDatabase.child(UserHandleToView);
-            OldUserInfoDatabase.removeValue();
-        }
-
-        // update this activity with the "new" handle, name, and password
-        UserHandleToView = NewUserHandle;
-        UserName = NewUserName;
-        Password = NewPassword;
-    }
-    */
 }

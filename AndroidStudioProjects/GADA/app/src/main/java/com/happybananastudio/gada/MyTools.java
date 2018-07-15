@@ -123,16 +123,18 @@ class MyTools {
         }
     }
 
-    static String UserTeamAsString(String Type) {
-        switch (Type) {
-            case "0":
+    static String UserTeamAsString(int Team) {
+        switch (Team) {
+            case 0:
                 return "Unassigned";
-            case "1":
+            case 1:
                 return "C";
-            case "2":
+            case 2:
                 return "B";
-            default:
+            case 3:
                 return "A";
+            default:
+                return "Error Loading";
         }
     }
 }

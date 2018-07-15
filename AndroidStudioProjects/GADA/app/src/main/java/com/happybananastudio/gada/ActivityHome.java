@@ -141,8 +141,8 @@ public class ActivityHome extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(ThisContext, ActivityUserProfile.class);
                 intent.putExtra("ClassCode", ClassCode);
+                intent.putExtra("ActiveUserID", UserID);
                 intent.putExtra("UserID", UserID);
-                intent.putExtra("UserIDtoView", UserID);
                 startActivity(intent);
             }
         });
@@ -159,7 +159,6 @@ public class ActivityHome extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }

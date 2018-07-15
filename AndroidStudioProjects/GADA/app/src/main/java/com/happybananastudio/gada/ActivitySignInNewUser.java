@@ -56,7 +56,7 @@ public class ActivitySignInNewUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ThisContext = this;
-        setContentView(R.layout.activity_user_new);
+        setContentView(R.layout.activity_signin_new_user);
         FirebaseApp.initializeApp(ThisContext);
         Database = FirebaseDatabase.getInstance().getReference();
         InitializeWidgets();
@@ -162,7 +162,6 @@ public class ActivitySignInNewUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                UserName = s.toString().toLowerCase();
             }
 
             @Override
@@ -228,8 +227,7 @@ public class ActivitySignInNewUser extends AppCompatActivity {
     private boolean ValidUserName() {
         String[] NameParts = UserName.split(" ");
         StringBuilder NameBuilder = new StringBuilder("");
-        for (int i = 0; i < NameParts.length; ++i) {
-            String NamePart = NameParts[i];
+        for (String NamePart : NameParts) {
             if (StringIsAlphanumericAndLength(NamePart, USER_NAME_MIN, USER_NAME_MAX)) {
                 String FormattedNamePart = CapitalizeFirstLetterOfWord(NamePart);
                 NameBuilder.append(FormattedNamePart).append(" ");
@@ -262,16 +260,16 @@ public class ActivitySignInNewUser extends AppCompatActivity {
         ClassCodesDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.hasChild(ClassCode)) {
+                if (dataSnapshot.hasChild(ClassCode)) {
                     // Existing ClassCode
+                    String DialogTitle = "Is the Following Correct?";
+                    String DialogMessage = "> Class Code: " + ClassCode + "\n> User ID: " + UserID + "\n> User Name: " + User.UserName + "\n> User Handle: " + User.UserHandle + "\n> Password: " + User.Password;
+                    DialogChoiceNewUser(ThisContext, DialogTitle, DialogMessage, User);
+                } else {
+                    // New ClassCode
                     String DialogTitle = "Class Code: " + ClassCode + " Doesn\'t Exist";
                     String DialogMessage = "Would you like to proceed and create this new class code?";
                     DialogChoiceNewClass(ThisContext, DialogTitle, DialogMessage, User);
-                } else {
-                    // Existing ClassCode
-                    String DialogTitle = "Is the Following Correct?";
-                    String DialogMessage = "> Class Code: " + ClassCode + "\n> User Name: " + User.UserName + "\n> User Handle: " + User.UserHandle + "\n> Password: " + User.Password + "\n> User Type: " + User.UserType;
-                    DialogChoiceNewUser(ThisContext, DialogTitle, DialogMessage, User);
                 }
             }
 
@@ -286,11 +284,13 @@ public class ActivitySignInNewUser extends AppCompatActivity {
         ClassDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("Class List")) {
+                Log.d("ClassCode", ClassCode);
+                if (dataSnapshot.hasChild("ClassList")) {
                     // There is a class listing for this class code
                     Log.d("DEBUG", "Class List Exists");
                     FB_GetNextAvailableUserID();
                 } else {
+                    // We can safely assume that this is the first user for this class list
                     Log.d("DEBUG", "Class List Does Not Exists");
                     UserID = 1;
                 }
@@ -395,7 +395,7 @@ public class ActivitySignInNewUser extends AppCompatActivity {
                         FB_CreateNewClassCode();
                         User.UserType = "2";
                         String DialogTitle = "Is the Following Correct?";
-                        String DialogMessage = "> Class Code: " + ClassCode + "\n> User Name: " + User.UserName + "\n> User Handle: " + User.UserHandle + "\n> Password: " + User.Password + "\n> User Type: " + User.UserType;
+                        String DialogMessage = "> Class Code: " + ClassCode + "\n> User ID: " + UserID + "\n> User Name: " + User.UserName + "\n> User Handle: " + User.UserHandle + "\n> Password: " + User.Password + "\n> User Type: " + User.UserType;
                         DialogChoiceNewUser(ThisContext, DialogTitle, DialogMessage, User);
 
                     }
@@ -436,7 +436,7 @@ public class ActivitySignInNewUser extends AppCompatActivity {
         Intent intent;
         intent = new Intent(ThisContext, ActivityHome.class);
         intent.putExtra("ClassCode", ClassCode);
-        intent.putExtra("UserID", UserID);
+        intent.putExtra("UserID", String.valueOf(UserID));
         startActivity(intent);
     }
 }

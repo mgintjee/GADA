@@ -68,4 +68,18 @@
     <string name="DialogClose">Close Dialog</string>
     <string name="DialogCancel">Cancel</string>
     <string name="DialogConfirm">Confirm</string>
+
+    <string-array name="SpinnerArrayUserTeam">
+        <item>Unassigned</item>
+        <item>Team C</item>
+        <item>Team B</item>
+        <item>Team A</item>
+    </string-array>
+
+    <string-array name="SpinnerArrayUserType">
+        <item>User</item>
+        <item>Mod</item>
+        <item>Admin</item>
+    </string-array>
+
 </resources>
