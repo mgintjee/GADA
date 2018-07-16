@@ -4,14 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,11 +21,11 @@ class MyTools {
         return StringNotEmpty(S) && IsAlphanumeric(S) && StringAtLeastCertainLength(S, Min) && StringAtMostCertainLength(S, Max);
     }
 
-    static boolean StringNotEmpty(String S) {
+    private static boolean StringNotEmpty(String S) {
         return S != null && !S.equals("");
     }
 
-    static boolean IsAlphanumeric(String S) {
+    private static boolean IsAlphanumeric(String S) {
         boolean Flag;
         String pattern = "[^a-zA-Z0-9]";
         Pattern p = Pattern.compile(pattern);
@@ -48,7 +41,7 @@ class MyTools {
         return S.length() <= L;
     }
 
-    static void DialogSimple(Context ThisContext, String title, String message) {
+    private static void DialogSimple(Context ThisContext, String title, String message) {
         AlertDialog.Builder builder;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -78,39 +71,12 @@ class MyTools {
         return FormattedCurrentDate;
     }
 
-    static String GetUserID(String ClassCode, String UserHandle) {
-        FirebaseDatabase Firebase = FirebaseDatabase.getInstance();
-        DatabaseReference ClassCodeDatabase = Firebase.getReference().child("");
-        return "";
-    }
-
     static void DialogSignInError(Context ThisContext, String DialogMessage) {
         String DialogTitle = "Sign-In Error";
         DialogSimple(ThisContext, DialogTitle, DialogMessage);
     }
 
-    static String GetUserHandle() {
-        return "";
-    }
-
-    static boolean ClassCodeExists(final String ClassCode) {
-        final boolean[] Flag = new boolean[1];
-        FirebaseDatabase Firebase = FirebaseDatabase.getInstance();
-        final DatabaseReference ClassCodesDatabase = Firebase.getReference().child("Class Codes");
-        ClassCodesDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Flag[0] = dataSnapshot.hasChild(ClassCode);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-        return Flag[0];
-    }
-
-    static String UserTypeAsString(String Type) {
+    static String UserTypeTitle(String Type) {
         switch (Type) {
             case "0":
                 return "User";
@@ -123,15 +89,15 @@ class MyTools {
         }
     }
 
-    static String UserTeamAsString(int Team) {
+    static String UserTeamTitle(String Team) {
         switch (Team) {
-            case 0:
+            case "0":
                 return "Unassigned";
-            case 1:
+            case "1":
                 return "C";
-            case 2:
+            case "2":
                 return "B";
-            case 3:
+            case "3":
                 return "A";
             default:
                 return "Error Loading";

@@ -14,6 +14,7 @@
 
     <string name="LabelAbout">Created by: Matthew Gintjee</string>
     <string name="LabelVersion">Version 1.00</string>
+    <string name="LabelCreatedOn">Created On:</string>
     <string name="LabelClassCode">Class Code:</string>
     <string name="LabelUserType">User Type:</string>
     <string name="LabelUserID">User ID:</string>
@@ -46,8 +47,8 @@
     <string name="HomeButtonClassList">View Class List</string>
 
     <string name="ButtonGoBack">Go Back</string>
-    <string name="ProfileButtonEnableEdit">Enable Editing</string>
-    <string name="ProfileButtonDisableEdit">Disable Editing</string>
+    <string name="ProfileButtonEnableEdit">Enable Edit</string>
+    <string name="ProfileButtonDisableEdit">Disable Edit</string>
     <string name="ProfileButtonSaveChanges">Save Changes</string>
 
     <string name="ClassListButtonViewProfile">Profile</string>

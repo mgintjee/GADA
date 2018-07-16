@@ -28,13 +28,44 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
                     android:layout_marginRight="10sp"
+                    android:layout_marginTop="10sp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/ProfileTV_CreatedOnLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:text="@string/LabelCreatedOn"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/ProfileTV_CreatedOn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/Default"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginTop="10sp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -64,6 +95,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
                     android:layout_marginRight="10sp"
+                    android:layout_marginTop="10sp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -93,6 +125,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
                     android:layout_marginRight="10sp"
+                    android:layout_marginTop="10sp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -108,7 +141,7 @@
                     <Spinner
                         android:id="@+id/ProfileS_UserTeam"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:entries="@array/SpinnerArrayUserTeam"
                         android:spinnerMode="dialog" />
@@ -120,6 +153,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
                     android:layout_marginRight="10sp"
+                    android:layout_marginTop="10sp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -135,7 +169,7 @@
                     <Spinner
                         android:id="@+id/ProfileS_UserType"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:entries="@array/SpinnerArrayUserType"
                         android:spinnerMode="dialog" />
@@ -147,6 +181,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
                     android:layout_marginRight="10sp"
+                    android:layout_marginTop="10sp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -176,6 +211,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
                     android:layout_marginRight="10sp"
+                    android:layout_marginTop="10sp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -201,124 +237,67 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ProfileLL_Edit"
+                    android:id="@+id/ProfileLL_EditPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:visibility="visible">
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginTop="10sp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/ProfileTV_Password"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10sp"
-                        android:layout_marginRight="10sp"
-                        android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:text="@string/LabelPassword"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
 
-                        <TextView
-                            android:id="@+id/ProfileTV_Password1"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:gravity="center_vertical"
-                            android:text="@string/LabelPassword"
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
-
-                        <EditText
-                            android:id="@+id/ProfileET_Password1"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:enabled="false"
-                            android:hint="@string/HintPassword"
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <EditText
+                        android:id="@+id/ProfileET_Password"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10sp"
-                        android:layout_marginRight="10sp"
-                        android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:hint="@string/HintPassword"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
 
-                        <TextView
-                            android:id="@+id/ProfileTV_Password2"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:gravity="center_vertical"
-                            android:text="@string/LabelPasswordAgain"
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
 
-                        <EditText
-                            android:id="@+id/ProfileET_Password2"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:enabled="false"
-                            android:hint="@string/HintPassword"
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
+                </LinearLayout>
 
-                    </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ProfileLL_SaveChanges"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10sp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
-                    <LinearLayout
+                    <Space
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10sp"
-                        android:layout_marginRight="10sp"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:visibility="visible" />
 
-                        <CheckBox
-                            android:id="@+id/ProfileCB_SamePassword"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:clickable="false"
-                            android:text="@string/LabelSamePassword" />
-
-                        <CheckBox
-                            android:id="@+id/ProfileCB_ShowPassword"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="@string/LabelShowPassword" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <Button
+                        android:id="@+id/ProfileB_SaveChanges"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/OrangeSun"
+                        android:text="@string/ProfileButtonSaveChanges"
+                        android:textColor="@android:color/black"
+                        android:visibility="visible" />
 
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:visibility="visible" />
-
-                        <Button
-                            android:id="@+id/ProfileB_SaveChanges"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:backgroundTint="@color/OrangeSun"
-                            android:text="@string/ProfileButtonSaveChanges"
-                            android:textColor="@android:color/black"
-                            android:visibility="visible" />
-
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:visibility="visible" />
-
-                    </LinearLayout>
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:visibility="visible" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -336,7 +315,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="horizontal">
 
             <Space
@@ -344,7 +322,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/ProfileB_GoBack"
@@ -370,7 +348,7 @@
                 android:backgroundTint="@color/GrayRock"
                 android:text="@string/ProfileButtonEnableEdit"
                 android:textColor="@android:color/black"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>
