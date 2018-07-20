@@ -44,7 +44,6 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
 
             ViewHolder.TV_UserHandle = convertView.findViewById(R.id.UserInfoRowTV_UserHandle);
             ViewHolder.B_Profile = convertView.findViewById(R.id.UserInfoRowB_UserProfile);
-            ViewHolder.B_Speech = convertView.findViewById(R.id.UserInfoRowB_UserSpeech);
 
             Result = convertView;
 
@@ -58,7 +57,6 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
         UserID = LocalUserInfo.UserID;
         ViewHolder.TV_UserHandle.setText(UserHandle);
         SetButtonListenerProfile(ViewHolder.B_Profile, UserID);
-        SetButtonListenerSpeech(ViewHolder.B_Speech);
 
         return Result;
     }
@@ -73,15 +71,6 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
                 intent.putExtra("ActiveUserID", ActiveUserID);
                 intent.putExtra("UserID", UserID);
                 ThisContext.startActivity(intent);
-            }
-        });
-    }
-
-    private void SetButtonListenerSpeech(Button B) {
-        B.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
     }
@@ -103,8 +92,8 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
     }
 
     private class ViewHolder {
-        private TextView TV_UserHandle, TV_UserName, TV_UserType;
-        private Button B_Profile, B_Speech;
+        private TextView TV_UserHandle, TV_UserTeam, TV_UserType;
+        private Button B_Profile;
     }
 
 }

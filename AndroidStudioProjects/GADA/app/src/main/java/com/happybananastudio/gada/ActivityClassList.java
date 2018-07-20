@@ -56,21 +56,10 @@ public class ActivityClassList extends AppCompatActivity {
 
     private void InitializeButtons() {
         InitializeButtonGoBack();
-        InitializeButtonRefresh();
     }
 
     private void InitializeButtonGoBack() {
         Button B = findViewById(R.id.ClassListB_GoBack);
-        B.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-
-    private void InitializeButtonRefresh() {
-        Button B = findViewById(R.id.ClassListB_Refresh);
         B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
