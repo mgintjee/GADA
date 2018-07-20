@@ -1,6 +1,7 @@
 package com.happybananastudio.gada;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
 /**
  * Created by mgint on 7/11/2018.
  */
@@ -19,19 +19,21 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
 
     private Context ThisContext;
     private ArrayList<ClassUser> ClassList;
-    private String ClassCode, UserHandle;
+    private String ActiveUserID, ClassCode;
 
-    ListViewClassList(Context Context, int Resource, ArrayList<ClassUser> NewClassList) {
+    ListViewClassList(Context Context, int Resource, ArrayList<ClassUser> NewClassList, String Code, String UserID) {
         super(Context, Resource, NewClassList);
         ThisContext = Context;
         ClassList = NewClassList;
+        ActiveUserID = UserID;
+        ClassCode = Code;
     }
 
     @NonNull
     @Override
     public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder ViewHolder;
-        String UserHandleToView, UserName, UserType;
+        String UserHandle, UserID;
         View Result;
         ClassUser LocalUserInfo = ClassList.get(position);
 
@@ -41,8 +43,8 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
             convertView = inflater.inflate(R.layout.listview_row_user_info, parent, false);
 
             ViewHolder.TV_UserHandle = convertView.findViewById(R.id.UserInfoRowTV_UserHandle);
-            ViewHolder.TV_UserName = convertView.findViewById(R.id.UserInfoRowTV_UserName);
-            ViewHolder.TV_UserType = convertView.findViewById(R.id.UserInfoRowTV_UserType);
+            ViewHolder.B_Profile = convertView.findViewById(R.id.UserInfoRowB_UserProfile);
+            ViewHolder.B_Speech = convertView.findViewById(R.id.UserInfoRowB_UserSpeech);
 
             Result = convertView;
 
@@ -51,16 +53,37 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
             ViewHolder = (ViewHolder) convertView.getTag();
             Result = convertView;
         }
-/*
-        UserHandleToView = LocalUserInfo.GetHandle();
-        UserName = LocalUserInfo.GetName();
-        UserType = LocalUserInfo.GetType();x
-        ViewHolder.TV_UserHandle.setText(UserHandleToView);
-        ViewHolder.TV_UserName.setText(UserName);
-        ViewHolder.TV_UserType.setText(UserType);
-        */
+
+        UserHandle = LocalUserInfo.UserHandle;
+        UserID = LocalUserInfo.UserID;
+        ViewHolder.TV_UserHandle.setText(UserHandle);
+        SetButtonListenerProfile(ViewHolder.B_Profile, UserID);
+        SetButtonListenerSpeech(ViewHolder.B_Speech);
 
         return Result;
+    }
+
+    private void SetButtonListenerProfile(Button B, final String UserID) {
+        B.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                intent = new Intent(ThisContext, ActivityUserProfile.class);
+                intent.putExtra("ClassCode", ClassCode);
+                intent.putExtra("ActiveUserID", ActiveUserID);
+                intent.putExtra("UserID", UserID);
+                ThisContext.startActivity(intent);
+            }
+        });
+    }
+
+    private void SetButtonListenerSpeech(Button B) {
+        B.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
 
@@ -82,14 +105,6 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
     private class ViewHolder {
         private TextView TV_UserHandle, TV_UserName, TV_UserType;
         private Button B_Profile, B_Speech;
-    }
-
-    public void SetClassCode(String C) {
-        ClassCode = C;
-    }
-
-    public void SetUserHandle(String U) {
-        UserHandle = U;
     }
 
 }

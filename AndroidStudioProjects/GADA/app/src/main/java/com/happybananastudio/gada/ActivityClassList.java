@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class ActivityClassList extends AppCompatActivity {
     private Context ThisContext;
-    private String ClassCode, UserHandle;
+    private String ClassCode, ActiveUserID;
     private ListView LV_ClassList;
 
     private FirebaseDatabase FireBase;
@@ -42,10 +42,10 @@ public class ActivityClassList extends AppCompatActivity {
 
     private void ExtractIntentInformation() {
         ClassCode = getIntent().getStringExtra("ClassCode");
-        UserHandle = getIntent().getStringExtra("UserHandle");
+        ActiveUserID = getIntent().getStringExtra("UserID");
 
         Log.d("ClassCode", ClassCode);
-        Log.d("UserHandle", UserHandle);
+        Log.d("UserID", ActiveUserID);
         RetrieveUsersFromDatabase();
     }
 
@@ -88,19 +88,21 @@ public class ActivityClassList extends AppCompatActivity {
     }
 
     private void RetrieveUsersFromDatabase() {
-        DatabaseReference UsersDatabase = Database.child(ClassCode);
+        DatabaseReference UsersDatabase = Database.child("ClassCodes").child(ClassCode).child("ClassList");
         UsersDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> ChildDataDS = dataSnapshot.getChildren();
                 ArrayList<ClassUser> ClassList = new ArrayList<>();
                 for (DataSnapshot ChildDS : ChildDataDS) {
-                    String UserHandleToView = ChildDS.getKey();
-                    String UserName = (String) ChildDS.child("User Name").getValue();
-                    String UserType = (String) ChildDS.child("User Type").getValue();
-                    String Password = (String) ChildDS.child("Password").getValue();
+                    ClassUser User = new ClassUser();
+                    String UserID = ChildDS.getKey();
+                    String UserHandle = (String) ChildDS.child("UserHandle").getValue();
+                    User.UserID = UserID;
+                    User.UserHandle = UserHandle;
+                    ClassList.add(User);
                 }
-                LV_ClassList.setAdapter(new ListViewClassList(ThisContext, 0, ClassList));
+                LV_ClassList.setAdapter(new ListViewClassList(ThisContext, 0, ClassList, ClassCode, ActiveUserID));
             }
 
             @Override

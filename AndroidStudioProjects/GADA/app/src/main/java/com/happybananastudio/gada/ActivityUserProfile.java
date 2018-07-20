@@ -431,7 +431,6 @@ public class ActivityUserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ValidInput()) {
-                    DialogSignInError(ThisContext, "Success!!!!!!!!!!!");
                     ClassUser User = new ClassUser(CreatedOn, NewPassword, NewUserHandle, NewUserName, NewUserTeam, NewUserType);
                     String DialogTitle = "Is the Following Correct?";
                     String DialogMessage = "\n> User Name: " + User.UserName + "\n> User Handle: " + User.UserHandle + "\n> Password: " + User.Password + "\n>UserTeam: " + UserTeamTitle(User.UserTeam) + "\n>UserType: " + UserTypeTitle(User.UserType);

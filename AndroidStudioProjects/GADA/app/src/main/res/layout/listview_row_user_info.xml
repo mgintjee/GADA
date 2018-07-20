@@ -3,14 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/UserInfoRowTV_UserProfile"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="@string/ClassListButtonViewProfile"
-        android:textSize="14sp" />
-
     <TextView
         android:id="@+id/UserInfoRowTV_UserHandle"
         android:layout_width="match_parent"
@@ -19,28 +11,19 @@
         android:text="@string/Default"
         android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/UserInfoRowTV_UserName"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="@string/Default"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/UserInfoRowTV_UserType"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="@string/Default"
-        android:textSize="14sp" />
-
     <Button
-        android:id="@+id/UserInfoRowTV_UserSpeech"
+        android:id="@+id/UserInfoRowB_UserSpeech"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="@string/ClassListButtonViewSpeech"
         android:textSize="14sp" />
 
+    <Button
+        android:id="@+id/UserInfoRowB_UserProfile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="@string/ClassListButtonViewProfile"
+        android:textSize="14sp" />
 </LinearLayout>

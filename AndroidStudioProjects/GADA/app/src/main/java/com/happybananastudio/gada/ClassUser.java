@@ -2,7 +2,7 @@ package com.happybananastudio.gada;
 
 public class ClassUser {
 
-    public String CreatedOn, Password, UserHandle, UserName, UserTeam, UserType;
+    public String CreatedOn, Password, UserHandle, UserID, UserName, UserTeam, UserType;
 
     ClassUser() {
     }

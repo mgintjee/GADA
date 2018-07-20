@@ -30,13 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/LabelUserProfile"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:text="@string/LabelUserHandle"
                 android:textSize="14sp" />
 
@@ -44,21 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/LabelUserName"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/LabelUserType"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/LabelUserTeam"
+                android:text="@string/LabelUserProfile"
                 android:textSize="14sp" />
 
             <TextView
@@ -89,6 +68,11 @@
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
             <Button
                 android:id="@+id/ClassListB_GoBack"
                 android:layout_width="match_parent"
@@ -102,15 +86,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/ClassListB_Refresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/GrayRock"
-                android:text="@string/ButtonGoBack"
-                android:textColor="@android:color/black" />
 
         </LinearLayout>
     </RelativeLayout>
