@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/ScheduleTV_Header"
+            android:id="@+id/SpeechTV_Header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ScheduleHeader"
@@ -22,36 +22,54 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/ScheduleTV_Speech"
+            android:id="@+id/SpeechTV_Timer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ScheduleHeader"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/SpeechTV_Speech"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:background="@color/white"
+                    android:text="@string/Default"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/BlueSea"
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/SpeechLL_TimerOff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
             <Button
-                android:id="@+id/ScheduleB_GoBack"
+                android:id="@+id/SpeechB_GoBack"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -64,6 +82,48 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
+            <Button
+                android:id="@+id/SpeechB_Profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/GrayRock"
+                android:text="@string/HomeButtonMyProfile"
+                android:textColor="@android:color/black" />
+
         </LinearLayout>
-    </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/SpeechLL_TimerOn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/SpeechB_StopTimer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/GrayRock"
+                android:text="@string/ButtonGoBack"
+                android:textColor="@android:color/black" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/SpeechB_ResetTimer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/GrayRock"
+                android:text="@string/HomeButtonMyProfile"
+                android:textColor="@android:color/black" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

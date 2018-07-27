@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Space;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -99,22 +98,22 @@ public class ActivityUserProfile extends AppCompatActivity {
 
     private void EnableViewingProfilePassword() {
         LinearLayout LL = findViewById(R.id.ProfileLL_EditPassword);
-        Space S = findViewById(R.id.Profile_Spacer);
-        Button B = findViewById(R.id.ProfileB_Edit);
+        Button B_Edit = findViewById(R.id.ProfileB_Edit);
+        Button B_Speech = findViewById(R.id.ProfileB_Speech);
 
         LL.setVisibility(View.VISIBLE);
-        S.setVisibility(View.GONE);
-        B.setVisibility(View.VISIBLE);
+        B_Edit.setVisibility(View.VISIBLE);
+        B_Speech.setVisibility(View.GONE);
     }
 
     private void DisableViewingProfilePassword() {
         LinearLayout LL = findViewById(R.id.ProfileLL_EditPassword);
-        Space S = findViewById(R.id.Profile_Spacer);
-        Button B = findViewById(R.id.ProfileB_Edit);
+        Button B_Edit = findViewById(R.id.ProfileB_Edit);
+        Button B_Speech = findViewById(R.id.ProfileB_Speech);
 
         LL.setVisibility(View.GONE);
-        S.setVisibility(View.VISIBLE);
-        B.setVisibility(View.GONE);
+        B_Edit.setVisibility(View.VISIBLE);
+        B_Speech.setVisibility(View.GONE);
     }
 
     // Handling Editing Features

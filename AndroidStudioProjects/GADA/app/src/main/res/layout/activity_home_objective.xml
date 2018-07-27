@@ -228,11 +228,6 @@
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
             <Button
                 android:id="@+id/ObjectiveB_GoBack"
                 android:layout_width="match_parent"
@@ -246,6 +241,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/ObjectiveB_Profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/GrayRock"
+                android:text="@string/HomeButtonMyProfile"
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
     </RelativeLayout>

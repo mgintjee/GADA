@@ -195,41 +195,46 @@
                         android:text="@string/LabelShowPassword" />
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="10sp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/NewUserB_Cancel"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/LoginButtonCancel"
-                        android:textColor="@android:color/black" />
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <Button
-                        android:id="@+id/NewUserB_SignIn"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/OrangeSun"
-                        android:text="@string/LoginButtonSignIn"
-                        android:textColor="@android:color/black" />
-
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/NewUserB_Cancel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/GrayRock"
+                android:text="@string/LoginButtonCancel"
+                android:textColor="@android:color/black" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/NewUserB_SignIn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/GrayRock"
+                android:text="@string/LoginButtonSignIn"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

@@ -8,11 +8,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center_vertical"
         android:text="@string/Default"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="18sp"
-        android:gravity="center_vertical" />
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/UserInfoRowTV_UserTeam"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="@string/Default"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/UserInfoRowB_UserProfile"

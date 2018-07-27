@@ -87,8 +87,10 @@ public class ActivityClassList extends AppCompatActivity {
                     ClassUser User = new ClassUser();
                     String UserID = ChildDS.getKey();
                     String UserHandle = (String) ChildDS.child("UserHandle").getValue();
+                    String UserTeam = (String) ChildDS.child("UserTeam").getValue();
                     User.UserID = UserID;
                     User.UserHandle = UserHandle;
+                    User.UserTeam = UserTeam;
                     ClassList.add(User);
                 }
                 LV_ClassList.setAdapter(new ListViewClassList(ThisContext, 0, ClassList, ClassCode, ActiveUserID));

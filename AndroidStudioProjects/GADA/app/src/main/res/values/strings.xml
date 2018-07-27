@@ -45,6 +45,7 @@
     <string name="HomeButtonSubjective">View Subjective Materials</string>
     <string name="HomeButtonSchedule">View Schedule</string>
     <string name="HomeButtonClassList">View Class List</string>
+    <string name="ButtonViewSpeech">View Speech</string>
 
     <string name="ButtonGoBack">Go Back</string>
     <string name="ProfileButtonEnableEdit">Enable Edit</string>

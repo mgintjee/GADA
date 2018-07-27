@@ -317,13 +317,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Space
-                android:id="@+id/Profile_Spacer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:visibility="visible" />
-
             <Button
                 android:id="@+id/ProfileB_GoBack"
                 android:layout_width="match_parent"
@@ -349,6 +342,16 @@
                 android:text="@string/ProfileButtonEnableEdit"
                 android:textColor="@android:color/black"
                 android:visibility="gone" />
+
+            <Button
+                android:id="@+id/ProfileB_Speech"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/GrayRock"
+                android:text="@string/ButtonViewSpeech"
+                android:textColor="@android:color/black"
+                android:visibility="visible" />
         </LinearLayout>
 
     </LinearLayout>

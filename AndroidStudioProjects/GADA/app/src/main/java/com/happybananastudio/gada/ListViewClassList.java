@@ -33,7 +33,7 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
     @Override
     public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder ViewHolder;
-        String UserHandle, UserID;
+        String UserHandle, UserID, UserTeam;
         View Result;
         ClassUser LocalUserInfo = ClassList.get(position);
 
@@ -43,6 +43,7 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
             convertView = inflater.inflate(R.layout.listview_row_user_info, parent, false);
 
             ViewHolder.TV_UserHandle = convertView.findViewById(R.id.UserInfoRowTV_UserHandle);
+            ViewHolder.TV_UserTeam = convertView.findViewById(R.id.UserInfoRowTV_UserTeam);
             ViewHolder.B_Profile = convertView.findViewById(R.id.UserInfoRowB_UserProfile);
 
             Result = convertView;
@@ -55,7 +56,9 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
 
         UserHandle = LocalUserInfo.UserHandle;
         UserID = LocalUserInfo.UserID;
+        UserTeam = LocalUserInfo.UserTeam;
         ViewHolder.TV_UserHandle.setText(UserHandle);
+        ViewHolder.TV_UserTeam.setText(UserTeam);
         SetButtonListenerProfile(ViewHolder.B_Profile, UserID);
 
         return Result;
@@ -92,7 +95,7 @@ public class ListViewClassList extends ArrayAdapter<ClassUser> {
     }
 
     private class ViewHolder {
-        private TextView TV_UserHandle, TV_UserTeam, TV_UserType;
+        private TextView TV_UserHandle, TV_UserTeam;
         private Button B_Profile;
     }
 
